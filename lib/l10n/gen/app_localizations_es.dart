@@ -190,10 +190,113 @@ class AppLocalizationsEs extends AppLocalizations {
   String get routineDeleteBody => 'Tu historial de entrenamientos se conserva.';
 
   @override
+  String get ok => 'Aceptar';
+
+  @override
   String get historyTitle => 'Historial';
 
   @override
+  String get historyEmpty =>
+      'Cuando termines tu primer entrenamiento aparecerá aquí.';
+
+  @override
   String get workoutStart => 'Entrenar';
+
+  @override
+  String get workoutTitle => 'Entrenamiento';
+
+  @override
+  String get workoutFinish => 'Terminar';
+
+  @override
+  String get workoutDiscard => 'Descartar entrenamiento';
+
+  @override
+  String get workoutDiscardTitle => '¿Descartar entrenamiento?';
+
+  @override
+  String get workoutDiscardBody => 'Se perderán las series registradas.';
+
+  @override
+  String get workoutFinishTitle => '¿Terminar entrenamiento?';
+
+  @override
+  String get workoutFinishBody => 'Las series sin completar se descartarán.';
+
+  @override
+  String get workoutNothingDone => 'Marca al menos una serie como completada.';
+
+  @override
+  String get workoutNotFound => 'No se encontró el entrenamiento.';
+
+  @override
+  String get workoutInProgress => 'Entrenamiento en curso';
+
+  @override
+  String get workoutContinue => 'Continuar';
+
+  @override
+  String get setWeight => 'Peso (kg)';
+
+  @override
+  String get setDone => 'Serie completada';
+
+  @override
+  String get addSet => 'Añadir serie';
+
+  @override
+  String lastTime(String sets) {
+    return 'Última vez: $sets';
+  }
+
+  @override
+  String get lastTimeNone => 'Primera vez con este ejercicio';
+
+  @override
+  String get restTimer => 'Descanso';
+
+  @override
+  String get restSkip => 'Saltar';
+
+  @override
+  String restDuration(int seconds) {
+    return 'Descanso: $seconds s';
+  }
+
+  @override
+  String get newRecordsTitle => '¡Nuevo récord!';
+
+  @override
+  String newRecordsBody(String names) {
+    return 'Superaste tu marca en: $names';
+  }
+
+  @override
+  String get recordsTitle => 'Récords personales';
+
+  @override
+  String get recordsEmpty => 'Tus récords aparecerán cuando completes series.';
+
+  @override
+  String get recordMaxWeight => 'Peso máx.';
+
+  @override
+  String get record1RM => '1RM est.';
+
+  @override
+  String recordMaxReps(int reps) {
+    return 'Máx. repeticiones: $reps';
+  }
+
+  @override
+  String durationMin(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String workoutSummary(int sets, String volume) {
+    return '$sets series · $volume kg';
+  }
 
   @override
   String get sets => 'Series';

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/widgets/state_views.dart';
 import '../../../l10n/gen/app_localizations.dart';
+import '../../workout/data/workout_repository.dart';
 import '../data/routine_repository.dart';
 import '../domain/routine_models.dart';
 
@@ -41,9 +42,33 @@ class RoutinesPage extends ConsumerWidget {
         empty: EmptyState(icon: Icons.fitness_center, message: l10n.routinesEmpty),
         builder: (list) => ListView.separated(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
-          itemCount: list.length,
+          itemCount: list.length + 1,
           separatorBuilder: (_, _) => const SizedBox(height: 8),
-          itemBuilder: (_, i) => _RoutineCard(list[i]),
+          itemBuilder: (_, i) => i == 0 ? const _ActiveBanner() : _RoutineCard(list[i - 1]),
+        ),
+      ),
+    );
+  }
+}
+
+/// Shown while an unfinished workout exists so it can be resumed.
+class _ActiveBanner extends ConsumerWidget {
+  const _ActiveBanner();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final w = ref.watch(activeWorkoutProvider).value;
+    if (w == null) return const SizedBox.shrink();
+    final l10n = AppLocalizations.of(context);
+    return Card(
+      color: Theme.of(context).colorScheme.primaryContainer,
+      child: ListTile(
+        leading: const Icon(Icons.timer_outlined),
+        title: Text(l10n.workoutInProgress),
+        subtitle: Text(w.name),
+        trailing: FilledButton(
+          onPressed: () => context.push('/workout/${w.id}'),
+          child: Text(l10n.workoutContinue),
         ),
       ),
     );
@@ -66,7 +91,10 @@ class _RoutineCard extends ConsumerWidget {
         trailing: Row(mainAxisSize: MainAxisSize.min, children: [
           if (s.exerciseCount > 0)
             FilledButton.icon(
-              onPressed: () => context.push('/workout/${s.routine.id}'),
+              onPressed: () async {
+                final id = await ref.read(workoutRepositoryProvider).startWorkout(s.routine.id);
+                if (context.mounted) context.push('/workout/$id');
+              },
               icon: const Icon(Icons.play_arrow),
               label: Text(l10n.workoutStart),
             ),

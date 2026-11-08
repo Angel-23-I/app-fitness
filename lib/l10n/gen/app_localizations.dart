@@ -424,17 +424,197 @@ abstract class AppLocalizations {
   /// **'Tu historial de entrenamientos se conserva.'**
   String get routineDeleteBody;
 
+  /// No description provided for @ok.
+  ///
+  /// In es, this message translates to:
+  /// **'Aceptar'**
+  String get ok;
+
   /// No description provided for @historyTitle.
   ///
   /// In es, this message translates to:
   /// **'Historial'**
   String get historyTitle;
 
+  /// No description provided for @historyEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuando termines tu primer entrenamiento aparecerá aquí.'**
+  String get historyEmpty;
+
   /// No description provided for @workoutStart.
   ///
   /// In es, this message translates to:
   /// **'Entrenar'**
   String get workoutStart;
+
+  /// No description provided for @workoutTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Entrenamiento'**
+  String get workoutTitle;
+
+  /// No description provided for @workoutFinish.
+  ///
+  /// In es, this message translates to:
+  /// **'Terminar'**
+  String get workoutFinish;
+
+  /// No description provided for @workoutDiscard.
+  ///
+  /// In es, this message translates to:
+  /// **'Descartar entrenamiento'**
+  String get workoutDiscard;
+
+  /// No description provided for @workoutDiscardTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Descartar entrenamiento?'**
+  String get workoutDiscardTitle;
+
+  /// No description provided for @workoutDiscardBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Se perderán las series registradas.'**
+  String get workoutDiscardBody;
+
+  /// No description provided for @workoutFinishTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Terminar entrenamiento?'**
+  String get workoutFinishTitle;
+
+  /// No description provided for @workoutFinishBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Las series sin completar se descartarán.'**
+  String get workoutFinishBody;
+
+  /// No description provided for @workoutNothingDone.
+  ///
+  /// In es, this message translates to:
+  /// **'Marca al menos una serie como completada.'**
+  String get workoutNothingDone;
+
+  /// No description provided for @workoutNotFound.
+  ///
+  /// In es, this message translates to:
+  /// **'No se encontró el entrenamiento.'**
+  String get workoutNotFound;
+
+  /// No description provided for @workoutInProgress.
+  ///
+  /// In es, this message translates to:
+  /// **'Entrenamiento en curso'**
+  String get workoutInProgress;
+
+  /// No description provided for @workoutContinue.
+  ///
+  /// In es, this message translates to:
+  /// **'Continuar'**
+  String get workoutContinue;
+
+  /// No description provided for @setWeight.
+  ///
+  /// In es, this message translates to:
+  /// **'Peso (kg)'**
+  String get setWeight;
+
+  /// No description provided for @setDone.
+  ///
+  /// In es, this message translates to:
+  /// **'Serie completada'**
+  String get setDone;
+
+  /// No description provided for @addSet.
+  ///
+  /// In es, this message translates to:
+  /// **'Añadir serie'**
+  String get addSet;
+
+  /// No description provided for @lastTime.
+  ///
+  /// In es, this message translates to:
+  /// **'Última vez: {sets}'**
+  String lastTime(String sets);
+
+  /// No description provided for @lastTimeNone.
+  ///
+  /// In es, this message translates to:
+  /// **'Primera vez con este ejercicio'**
+  String get lastTimeNone;
+
+  /// No description provided for @restTimer.
+  ///
+  /// In es, this message translates to:
+  /// **'Descanso'**
+  String get restTimer;
+
+  /// No description provided for @restSkip.
+  ///
+  /// In es, this message translates to:
+  /// **'Saltar'**
+  String get restSkip;
+
+  /// No description provided for @restDuration.
+  ///
+  /// In es, this message translates to:
+  /// **'Descanso: {seconds} s'**
+  String restDuration(int seconds);
+
+  /// No description provided for @newRecordsTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Nuevo récord!'**
+  String get newRecordsTitle;
+
+  /// No description provided for @newRecordsBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Superaste tu marca en: {names}'**
+  String newRecordsBody(String names);
+
+  /// No description provided for @recordsTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Récords personales'**
+  String get recordsTitle;
+
+  /// No description provided for @recordsEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'Tus récords aparecerán cuando completes series.'**
+  String get recordsEmpty;
+
+  /// No description provided for @recordMaxWeight.
+  ///
+  /// In es, this message translates to:
+  /// **'Peso máx.'**
+  String get recordMaxWeight;
+
+  /// No description provided for @record1RM.
+  ///
+  /// In es, this message translates to:
+  /// **'1RM est.'**
+  String get record1RM;
+
+  /// No description provided for @recordMaxReps.
+  ///
+  /// In es, this message translates to:
+  /// **'Máx. repeticiones: {reps}'**
+  String recordMaxReps(int reps);
+
+  /// No description provided for @durationMin.
+  ///
+  /// In es, this message translates to:
+  /// **'{minutes} min'**
+  String durationMin(int minutes);
+
+  /// No description provided for @workoutSummary.
+  ///
+  /// In es, this message translates to:
+  /// **'{sets} series · {volume} kg'**
+  String workoutSummary(int sets, String volume);
 
   /// No description provided for @sets.
   ///
