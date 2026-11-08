@@ -52,8 +52,81 @@ class AppLocalizationsEs extends AppLocalizations {
   String get homeSoon => 'Tu resumen del día aparecerá aquí.';
 
   @override
-  String get progressSoon =>
+  String get tabMeasures => 'Medidas';
+
+  @override
+  String get tabPhotos => 'Fotos';
+
+  @override
+  String get range1m => '1 mes';
+
+  @override
+  String get range3m => '3 meses';
+
+  @override
+  String get rangeAll => 'Todo';
+
+  @override
+  String get metricWeight => 'Peso';
+
+  @override
+  String get metricWaist => 'Cintura';
+
+  @override
+  String get metricChest => 'Pecho';
+
+  @override
+  String get metricArm => 'Brazo';
+
+  @override
+  String get metricThigh => 'Muslo';
+
+  @override
+  String get entryAdd => 'Registrar';
+
+  @override
+  String get entryDate => 'Fecha';
+
+  @override
+  String get entryNeedValue => 'Introduce al menos un valor.';
+
+  @override
+  String get measuresEmpty =>
       'Registra tu peso y medidas para ver tu evolución.';
+
+  @override
+  String get chartNeedMore =>
+      'Registra al menos dos mediciones para ver la gráfica.';
+
+  @override
+  String get photosEmpty => 'Añade tu primera foto de progreso.';
+
+  @override
+  String get photoAdd => 'Añadir foto';
+
+  @override
+  String get photoCamera => 'Tomar foto';
+
+  @override
+  String get photoGallery => 'Elegir de la galería';
+
+  @override
+  String get photoCompare => 'Comparar';
+
+  @override
+  String get photoCompareHint => 'Elige dos fotos';
+
+  @override
+  String get photoCompareView => 'Ver comparación';
+
+  @override
+  String get photoError => 'No se pudo guardar la foto.';
+
+  @override
+  String get photoMissing => 'Alguna de las fotos ya no está disponible.';
+
+  @override
+  String get comparisonTitle => 'Comparación';
 
   @override
   String get mealsSoon => 'Registra tus comidas del día.';

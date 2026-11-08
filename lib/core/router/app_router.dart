@@ -9,6 +9,7 @@ import '../../features/workout/presentation/history_detail_page.dart';
 import '../../features/workout/presentation/history_page.dart';
 import '../../features/workout/presentation/records_page.dart';
 import '../../features/workout/presentation/workout_page.dart';
+import '../../features/progress/presentation/photo_compare_page.dart';
 import '../../features/nutrition/presentation/meals_page.dart';
 import '../../features/progress/presentation/progress_page.dart';
 import '../../features/routines/presentation/routines_page.dart';
@@ -37,6 +38,13 @@ GoRouter createRouter() => GoRouter(
         GoRoute(
           path: '/history/:id',
           builder: (_, s) => HistoryDetailPage(workoutId: int.parse(s.pathParameters['id']!)),
+        ),
+        GoRoute(
+          path: '/progress/compare',
+          builder: (_, s) => PhotoComparePage(
+            idA: int.parse(s.uri.queryParameters['a']!),
+            idB: int.parse(s.uri.queryParameters['b']!),
+          ),
         ),
         GoRoute(path: '/records', builder: (_, _) => const RecordsPage()),
         StatefulShellRoute.indexedStack(

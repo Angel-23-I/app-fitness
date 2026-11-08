@@ -16,6 +16,10 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>fittrack</string>
+	<key>NSCameraUsageDescription</key>
+	<string>FitTrack usa la cámara para tus fotos de progreso y para analizar comidas.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>FitTrack accede a tus fotos para elegir imágenes de progreso o de comidas.</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

@@ -178,11 +178,155 @@ abstract class AppLocalizations {
   /// **'Tu resumen del día aparecerá aquí.'**
   String get homeSoon;
 
-  /// No description provided for @progressSoon.
+  /// No description provided for @tabMeasures.
+  ///
+  /// In es, this message translates to:
+  /// **'Medidas'**
+  String get tabMeasures;
+
+  /// No description provided for @tabPhotos.
+  ///
+  /// In es, this message translates to:
+  /// **'Fotos'**
+  String get tabPhotos;
+
+  /// No description provided for @range1m.
+  ///
+  /// In es, this message translates to:
+  /// **'1 mes'**
+  String get range1m;
+
+  /// No description provided for @range3m.
+  ///
+  /// In es, this message translates to:
+  /// **'3 meses'**
+  String get range3m;
+
+  /// No description provided for @rangeAll.
+  ///
+  /// In es, this message translates to:
+  /// **'Todo'**
+  String get rangeAll;
+
+  /// No description provided for @metricWeight.
+  ///
+  /// In es, this message translates to:
+  /// **'Peso'**
+  String get metricWeight;
+
+  /// No description provided for @metricWaist.
+  ///
+  /// In es, this message translates to:
+  /// **'Cintura'**
+  String get metricWaist;
+
+  /// No description provided for @metricChest.
+  ///
+  /// In es, this message translates to:
+  /// **'Pecho'**
+  String get metricChest;
+
+  /// No description provided for @metricArm.
+  ///
+  /// In es, this message translates to:
+  /// **'Brazo'**
+  String get metricArm;
+
+  /// No description provided for @metricThigh.
+  ///
+  /// In es, this message translates to:
+  /// **'Muslo'**
+  String get metricThigh;
+
+  /// No description provided for @entryAdd.
+  ///
+  /// In es, this message translates to:
+  /// **'Registrar'**
+  String get entryAdd;
+
+  /// No description provided for @entryDate.
+  ///
+  /// In es, this message translates to:
+  /// **'Fecha'**
+  String get entryDate;
+
+  /// No description provided for @entryNeedValue.
+  ///
+  /// In es, this message translates to:
+  /// **'Introduce al menos un valor.'**
+  String get entryNeedValue;
+
+  /// No description provided for @measuresEmpty.
   ///
   /// In es, this message translates to:
   /// **'Registra tu peso y medidas para ver tu evolución.'**
-  String get progressSoon;
+  String get measuresEmpty;
+
+  /// No description provided for @chartNeedMore.
+  ///
+  /// In es, this message translates to:
+  /// **'Registra al menos dos mediciones para ver la gráfica.'**
+  String get chartNeedMore;
+
+  /// No description provided for @photosEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'Añade tu primera foto de progreso.'**
+  String get photosEmpty;
+
+  /// No description provided for @photoAdd.
+  ///
+  /// In es, this message translates to:
+  /// **'Añadir foto'**
+  String get photoAdd;
+
+  /// No description provided for @photoCamera.
+  ///
+  /// In es, this message translates to:
+  /// **'Tomar foto'**
+  String get photoCamera;
+
+  /// No description provided for @photoGallery.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegir de la galería'**
+  String get photoGallery;
+
+  /// No description provided for @photoCompare.
+  ///
+  /// In es, this message translates to:
+  /// **'Comparar'**
+  String get photoCompare;
+
+  /// No description provided for @photoCompareHint.
+  ///
+  /// In es, this message translates to:
+  /// **'Elige dos fotos'**
+  String get photoCompareHint;
+
+  /// No description provided for @photoCompareView.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver comparación'**
+  String get photoCompareView;
+
+  /// No description provided for @photoError.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo guardar la foto.'**
+  String get photoError;
+
+  /// No description provided for @photoMissing.
+  ///
+  /// In es, this message translates to:
+  /// **'Alguna de las fotos ya no está disponible.'**
+  String get photoMissing;
+
+  /// No description provided for @comparisonTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Comparación'**
+  String get comparisonTitle;
 
   /// No description provided for @mealsSoon.
   ///
