@@ -16,6 +16,15 @@ extension MuscleGroupLabel on MuscleGroup {
       };
 }
 
+extension MealTypeLabel on MealType {
+  String label(AppLocalizations l) => switch (this) {
+        MealType.breakfast => l.mealBreakfast,
+        MealType.lunch => l.mealLunch,
+        MealType.dinner => l.mealDinner,
+        MealType.snack => l.mealSnack,
+      };
+}
+
 extension EquipmentLabel on Equipment {
   String label(AppLocalizations l) => switch (this) {
         Equipment.barbell => l.equipBarbell,

@@ -24,6 +24,12 @@ class SettingsPage extends StatelessWidget {
           subtitle: Text(l10n.remindersSubtitle),
           onTap: () => context.push('/reminders'),
         ),
+        ListTile(
+          leading: const Icon(Icons.auto_awesome_outlined),
+          title: Text(l10n.apiKeyTitle),
+          subtitle: Text(l10n.apiKeySubtitle),
+          onTap: () => context.push('/settings/api-key'),
+        ),
       ]),
     );
   }

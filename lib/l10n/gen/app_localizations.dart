@@ -448,11 +448,299 @@ abstract class AppLocalizations {
   /// **'Comparación'**
   String get comparisonTitle;
 
-  /// No description provided for @mealsSoon.
+  /// No description provided for @today.
   ///
   /// In es, this message translates to:
-  /// **'Registra tus comidas del día.'**
-  String get mealsSoon;
+  /// **'Hoy'**
+  String get today;
+
+  /// No description provided for @caloriesToday.
+  ///
+  /// In es, this message translates to:
+  /// **'Calorías de hoy'**
+  String get caloriesToday;
+
+  /// No description provided for @mealsEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'Aún no has registrado comidas este día.'**
+  String get mealsEmpty;
+
+  /// No description provided for @mealAdd.
+  ///
+  /// In es, this message translates to:
+  /// **'Añadir comida'**
+  String get mealAdd;
+
+  /// No description provided for @mealFromCamera.
+  ///
+  /// In es, this message translates to:
+  /// **'Foto con la cámara'**
+  String get mealFromCamera;
+
+  /// No description provided for @mealFromGallery.
+  ///
+  /// In es, this message translates to:
+  /// **'Foto de la galería'**
+  String get mealFromGallery;
+
+  /// No description provided for @aiNeedsKey.
+  ///
+  /// In es, this message translates to:
+  /// **'Configura tu clave de API en Ajustes para activarlo.'**
+  String get aiNeedsKey;
+
+  /// No description provided for @addManually.
+  ///
+  /// In es, this message translates to:
+  /// **'Añadir manualmente'**
+  String get addManually;
+
+  /// No description provided for @aiDisabledTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Análisis por foto desactivado'**
+  String get aiDisabledTitle;
+
+  /// No description provided for @aiDisabledBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Añade tu clave de API de Gemini para calcular calorías desde una foto. Mientras tanto puedes registrar comidas a mano.'**
+  String get aiDisabledBody;
+
+  /// No description provided for @configureKey.
+  ///
+  /// In es, this message translates to:
+  /// **'Configurar'**
+  String get configureKey;
+
+  /// No description provided for @mealBreakfast.
+  ///
+  /// In es, this message translates to:
+  /// **'Desayuno'**
+  String get mealBreakfast;
+
+  /// No description provided for @mealLunch.
+  ///
+  /// In es, this message translates to:
+  /// **'Almuerzo'**
+  String get mealLunch;
+
+  /// No description provided for @mealDinner.
+  ///
+  /// In es, this message translates to:
+  /// **'Cena'**
+  String get mealDinner;
+
+  /// No description provided for @mealSnack.
+  ///
+  /// In es, this message translates to:
+  /// **'Snack'**
+  String get mealSnack;
+
+  /// No description provided for @mealType.
+  ///
+  /// In es, this message translates to:
+  /// **'Tipo de comida'**
+  String get mealType;
+
+  /// No description provided for @mealReviewTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Revisa tu comida'**
+  String get mealReviewTitle;
+
+  /// No description provided for @analyzing.
+  ///
+  /// In es, this message translates to:
+  /// **'Analizando tu foto…'**
+  String get analyzing;
+
+  /// No description provided for @estimateDisclaimer.
+  ///
+  /// In es, this message translates to:
+  /// **'Estimación aproximada hecha por IA: puede equivocarse en alimentos y porciones. Revisa y corrige antes de guardar.'**
+  String get estimateDisclaimer;
+
+  /// No description provided for @confidenceLabel.
+  ///
+  /// In es, this message translates to:
+  /// **'Confianza: {level}'**
+  String confidenceLabel(String level);
+
+  /// No description provided for @confidenceHigh.
+  ///
+  /// In es, this message translates to:
+  /// **'alta'**
+  String get confidenceHigh;
+
+  /// No description provided for @confidenceMedium.
+  ///
+  /// In es, this message translates to:
+  /// **'media'**
+  String get confidenceMedium;
+
+  /// No description provided for @confidenceLow.
+  ///
+  /// In es, this message translates to:
+  /// **'baja'**
+  String get confidenceLow;
+
+  /// No description provided for @foodName.
+  ///
+  /// In es, this message translates to:
+  /// **'Alimento'**
+  String get foodName;
+
+  /// No description provided for @grams.
+  ///
+  /// In es, this message translates to:
+  /// **'Porción'**
+  String get grams;
+
+  /// No description provided for @protein.
+  ///
+  /// In es, this message translates to:
+  /// **'Prot.'**
+  String get protein;
+
+  /// No description provided for @carbs.
+  ///
+  /// In es, this message translates to:
+  /// **'Carb.'**
+  String get carbs;
+
+  /// No description provided for @fat.
+  ///
+  /// In es, this message translates to:
+  /// **'Grasa'**
+  String get fat;
+
+  /// No description provided for @addFoodItem.
+  ///
+  /// In es, this message translates to:
+  /// **'Añadir alimento'**
+  String get addFoodItem;
+
+  /// No description provided for @mealTotal.
+  ///
+  /// In es, this message translates to:
+  /// **'Total de la comida'**
+  String get mealTotal;
+
+  /// No description provided for @macrosLine.
+  ///
+  /// In es, this message translates to:
+  /// **'Proteínas {p} g · Carbohidratos {c} g · Grasas {f} g'**
+  String macrosLine(String p, String c, String f);
+
+  /// No description provided for @mealNeedItem.
+  ///
+  /// In es, this message translates to:
+  /// **'Añade al menos un alimento con nombre.'**
+  String get mealNeedItem;
+
+  /// No description provided for @mealSave.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardar comida'**
+  String get mealSave;
+
+  /// No description provided for @errNoApiKey.
+  ///
+  /// In es, this message translates to:
+  /// **'Aún no has configurado tu clave de API de Gemini.'**
+  String get errNoApiKey;
+
+  /// No description provided for @errNoInternet.
+  ///
+  /// In es, this message translates to:
+  /// **'No hay conexión a internet. Revisa tu red e inténtalo de nuevo.'**
+  String get errNoInternet;
+
+  /// No description provided for @errInvalidKey.
+  ///
+  /// In es, this message translates to:
+  /// **'La clave de API no es válida o no tiene permisos. Revísala en Ajustes.'**
+  String get errInvalidKey;
+
+  /// No description provided for @errQuota.
+  ///
+  /// In es, this message translates to:
+  /// **'Se alcanzó el límite de uso de la API. Espera un rato o revisa tu cuota.'**
+  String get errQuota;
+
+  /// No description provided for @errUnparseable.
+  ///
+  /// In es, this message translates to:
+  /// **'No se pudo entender la respuesta de la IA. Inténtalo de nuevo o añade la comida a mano.'**
+  String get errUnparseable;
+
+  /// No description provided for @errNoFood.
+  ///
+  /// In es, this message translates to:
+  /// **'No se detectó comida en la foto. Prueba con otra imagen más clara.'**
+  String get errNoFood;
+
+  /// No description provided for @errServer.
+  ///
+  /// In es, this message translates to:
+  /// **'El servicio de IA no está disponible ahora mismo. Inténtalo más tarde.'**
+  String get errServer;
+
+  /// No description provided for @apiKeyTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Análisis de comida con IA'**
+  String get apiKeyTitle;
+
+  /// No description provided for @apiKeySubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Clave de API de Gemini'**
+  String get apiKeySubtitle;
+
+  /// No description provided for @apiKeyIntro.
+  ///
+  /// In es, this message translates to:
+  /// **'La app puede estimar calorías y macros a partir de una foto usando la API de Gemini de Google. Necesitas tu propia clave, que se guarda cifrada solo en este dispositivo.'**
+  String get apiKeyIntro;
+
+  /// No description provided for @apiKeyStepsTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Cómo obtenerla'**
+  String get apiKeyStepsTitle;
+
+  /// No description provided for @apiKeySteps.
+  ///
+  /// In es, this message translates to:
+  /// **'1. Entra con tu cuenta de Google en Google AI Studio.\n2. Crea una clave de API.\n3. Cópiala y pégala aquí.'**
+  String get apiKeySteps;
+
+  /// No description provided for @apiKeyPrivacy.
+  ///
+  /// In es, this message translates to:
+  /// **'Al analizar una comida, la foto reducida se envía a Google. Las estimaciones son aproximadas y no sustituyen el consejo de un profesional de la nutrición. Tu clave nunca sale del dispositivo salvo para llamar a la API.'**
+  String get apiKeyPrivacy;
+
+  /// No description provided for @apiKeyField.
+  ///
+  /// In es, this message translates to:
+  /// **'Clave de API'**
+  String get apiKeyField;
+
+  /// No description provided for @apiKeySaved.
+  ///
+  /// In es, this message translates to:
+  /// **'Clave guardada'**
+  String get apiKeySaved;
+
+  /// No description provided for @apiKeyRemove.
+  ///
+  /// In es, this message translates to:
+  /// **'Quitar'**
+  String get apiKeyRemove;
 
   /// No description provided for @settingsSoon.
   ///

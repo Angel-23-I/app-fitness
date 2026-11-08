@@ -6,6 +6,7 @@ import 'package:fittrack/core/db/app_database.dart';
 import 'package:fittrack/core/db/enums.dart';
 import 'package:fittrack/features/goals/domain/goals.dart';
 import 'package:fittrack/features/goals/data/goals_providers.dart';
+import 'package:fittrack/features/nutrition/data/meal_repository.dart';
 import 'package:fittrack/features/progress/data/body_repository.dart';
 import 'package:fittrack/features/routines/data/routine_repository.dart';
 import 'package:fittrack/features/routines/domain/routine_models.dart';
@@ -22,6 +23,7 @@ void main() {
         activeWorkoutProvider.overrideWith((ref) => Stream.value(null)),
         bodyEntriesProvider.overrideWith((ref) => Stream.value(<BodyEntry>[])),
         goalsProvider.overrideWith((ref) => Stream.value(const Goals())),
+        todayMealsProvider.overrideWith((ref) => Stream.value(<MealWithItems>[])),
       ],
       child: const FitTrackApp(),
     ));

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -12,7 +14,9 @@ import '../../features/workout/presentation/workout_page.dart';
 import '../../features/progress/presentation/photo_compare_page.dart';
 import '../../features/goals/presentation/goals_page.dart';
 import '../../features/goals/presentation/reminders_page.dart';
+import '../../features/nutrition/presentation/meal_review_page.dart';
 import '../../features/nutrition/presentation/meals_page.dart';
+import '../../features/settings/presentation/api_key_page.dart';
 import '../../features/progress/presentation/progress_page.dart';
 import '../../features/routines/presentation/routines_page.dart';
 import '../../features/settings/presentation/settings_page.dart';
@@ -48,6 +52,11 @@ GoRouter createRouter() => GoRouter(
             idB: int.parse(s.uri.queryParameters['b']!),
           ),
         ),
+        GoRoute(
+          path: '/meals/review',
+          builder: (_, s) => MealReviewPage(imageBytes: s.extra as Uint8List?),
+        ),
+        GoRoute(path: '/settings/api-key', builder: (_, _) => const ApiKeyPage()),
         GoRoute(path: '/goals', builder: (_, _) => const GoalsPage()),
         GoRoute(path: '/reminders', builder: (_, _) => const RemindersPage()),
         GoRoute(path: '/records', builder: (_, _) => const RecordsPage()),

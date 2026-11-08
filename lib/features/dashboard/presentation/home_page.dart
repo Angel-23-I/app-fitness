@@ -7,6 +7,7 @@ import '../../../core/utils/format.dart';
 import '../../../core/widgets/state_views.dart';
 import '../../../l10n/gen/app_localizations.dart';
 import '../../goals/data/goals_providers.dart';
+import '../../nutrition/data/meal_repository.dart';
 import '../../progress/data/body_repository.dart';
 import '../../routines/data/routine_repository.dart';
 import '../../workout/data/workout_repository.dart';
@@ -40,7 +41,7 @@ class HomePage extends ConsumerWidget {
             _WeekCard(stats),
             const SizedBox(height: 12),
             const _WeightCard(),
-            const _ExtraCards(),
+            const _CaloriesCard(),
           ],
         ),
       ),
@@ -48,12 +49,41 @@ class HomePage extends ConsumerWidget {
   }
 }
 
-/// Hook for sections added by later features (calories); kept separate to avoid import cycles.
-class _ExtraCards extends StatelessWidget {
-  const _ExtraCards();
+/// Shown only when the food feature is in use: a calorie goal is set or something was eaten today.
+class _CaloriesCard extends ConsumerWidget {
+  const _CaloriesCard();
 
   @override
-  Widget build(BuildContext context) => const SizedBox.shrink();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final meals = ref.watch(todayMealsProvider).value ?? [];
+    final goal = ref.watch(goalsProvider).value?.dailyCalories;
+    if (meals.isEmpty && goal == null) return const SizedBox.shrink();
+    final kcal = meals.fold(0.0, (s, m) => s + m.totals.kcal);
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: Card(
+        child: InkWell(
+          onTap: () => context.go('/meals'),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(l10n.caloriesToday, style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: 4),
+              Text(goal == null ? '${kcal.round()} kcal' : '${kcal.round()} / $goal kcal'),
+              if (goal != null) ...[
+                const SizedBox(height: 12),
+                LinearProgressIndicator(
+                    value: (kcal / goal).clamp(0, 1).toDouble(),
+                    minHeight: 10,
+                    borderRadius: BorderRadius.circular(8)),
+              ],
+            ]),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class _StatCard extends StatelessWidget {

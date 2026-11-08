@@ -197,7 +197,167 @@ class AppLocalizationsEs extends AppLocalizations {
   String get comparisonTitle => 'Comparación';
 
   @override
-  String get mealsSoon => 'Registra tus comidas del día.';
+  String get today => 'Hoy';
+
+  @override
+  String get caloriesToday => 'Calorías de hoy';
+
+  @override
+  String get mealsEmpty => 'Aún no has registrado comidas este día.';
+
+  @override
+  String get mealAdd => 'Añadir comida';
+
+  @override
+  String get mealFromCamera => 'Foto con la cámara';
+
+  @override
+  String get mealFromGallery => 'Foto de la galería';
+
+  @override
+  String get aiNeedsKey =>
+      'Configura tu clave de API en Ajustes para activarlo.';
+
+  @override
+  String get addManually => 'Añadir manualmente';
+
+  @override
+  String get aiDisabledTitle => 'Análisis por foto desactivado';
+
+  @override
+  String get aiDisabledBody =>
+      'Añade tu clave de API de Gemini para calcular calorías desde una foto. Mientras tanto puedes registrar comidas a mano.';
+
+  @override
+  String get configureKey => 'Configurar';
+
+  @override
+  String get mealBreakfast => 'Desayuno';
+
+  @override
+  String get mealLunch => 'Almuerzo';
+
+  @override
+  String get mealDinner => 'Cena';
+
+  @override
+  String get mealSnack => 'Snack';
+
+  @override
+  String get mealType => 'Tipo de comida';
+
+  @override
+  String get mealReviewTitle => 'Revisa tu comida';
+
+  @override
+  String get analyzing => 'Analizando tu foto…';
+
+  @override
+  String get estimateDisclaimer =>
+      'Estimación aproximada hecha por IA: puede equivocarse en alimentos y porciones. Revisa y corrige antes de guardar.';
+
+  @override
+  String confidenceLabel(String level) {
+    return 'Confianza: $level';
+  }
+
+  @override
+  String get confidenceHigh => 'alta';
+
+  @override
+  String get confidenceMedium => 'media';
+
+  @override
+  String get confidenceLow => 'baja';
+
+  @override
+  String get foodName => 'Alimento';
+
+  @override
+  String get grams => 'Porción';
+
+  @override
+  String get protein => 'Prot.';
+
+  @override
+  String get carbs => 'Carb.';
+
+  @override
+  String get fat => 'Grasa';
+
+  @override
+  String get addFoodItem => 'Añadir alimento';
+
+  @override
+  String get mealTotal => 'Total de la comida';
+
+  @override
+  String macrosLine(String p, String c, String f) {
+    return 'Proteínas $p g · Carbohidratos $c g · Grasas $f g';
+  }
+
+  @override
+  String get mealNeedItem => 'Añade al menos un alimento con nombre.';
+
+  @override
+  String get mealSave => 'Guardar comida';
+
+  @override
+  String get errNoApiKey => 'Aún no has configurado tu clave de API de Gemini.';
+
+  @override
+  String get errNoInternet =>
+      'No hay conexión a internet. Revisa tu red e inténtalo de nuevo.';
+
+  @override
+  String get errInvalidKey =>
+      'La clave de API no es válida o no tiene permisos. Revísala en Ajustes.';
+
+  @override
+  String get errQuota =>
+      'Se alcanzó el límite de uso de la API. Espera un rato o revisa tu cuota.';
+
+  @override
+  String get errUnparseable =>
+      'No se pudo entender la respuesta de la IA. Inténtalo de nuevo o añade la comida a mano.';
+
+  @override
+  String get errNoFood =>
+      'No se detectó comida en la foto. Prueba con otra imagen más clara.';
+
+  @override
+  String get errServer =>
+      'El servicio de IA no está disponible ahora mismo. Inténtalo más tarde.';
+
+  @override
+  String get apiKeyTitle => 'Análisis de comida con IA';
+
+  @override
+  String get apiKeySubtitle => 'Clave de API de Gemini';
+
+  @override
+  String get apiKeyIntro =>
+      'La app puede estimar calorías y macros a partir de una foto usando la API de Gemini de Google. Necesitas tu propia clave, que se guarda cifrada solo en este dispositivo.';
+
+  @override
+  String get apiKeyStepsTitle => 'Cómo obtenerla';
+
+  @override
+  String get apiKeySteps =>
+      '1. Entra con tu cuenta de Google en Google AI Studio.\n2. Crea una clave de API.\n3. Cópiala y pégala aquí.';
+
+  @override
+  String get apiKeyPrivacy =>
+      'Al analizar una comida, la foto reducida se envía a Google. Las estimaciones son aproximadas y no sustituyen el consejo de un profesional de la nutrición. Tu clave nunca sale del dispositivo salvo para llamar a la API.';
+
+  @override
+  String get apiKeyField => 'Clave de API';
+
+  @override
+  String get apiKeySaved => 'Clave guardada';
+
+  @override
+  String get apiKeyRemove => 'Quitar';
 
   @override
   String get settingsSoon =>
