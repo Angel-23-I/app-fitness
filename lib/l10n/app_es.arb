@@ -1,0 +1,17 @@
+{
+  "@@locale": "es",
+  "appName": "FitTrack",
+  "navHome": "Inicio",
+  "navRoutines": "Rutinas",
+  "navProgress": "Progreso",
+  "navMeals": "Comida",
+  "navSettings": "Ajustes",
+  "emptyTitle": "Aún no hay nada aquí",
+  "errorTitle": "Algo salió mal",
+  "retry": "Reintentar",
+  "homeSoon": "Tu resumen del día aparecerá aquí.",
+  "routinesSoon": "Crea tu primera rutina para empezar a entrenar.",
+  "progressSoon": "Registra tu peso y medidas para ver tu evolución.",
+  "mealsSoon": "Registra tus comidas del día.",
+  "settingsSoon": "Aquí configurarás tus metas, recordatorios y la clave de API."
+}
