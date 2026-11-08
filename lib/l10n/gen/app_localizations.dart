@@ -172,11 +172,131 @@ abstract class AppLocalizations {
   /// **'Editar'**
   String get edit;
 
-  /// No description provided for @homeSoon.
+  /// No description provided for @todaySuggested.
   ///
   /// In es, this message translates to:
-  /// **'Tu resumen del día aparecerá aquí.'**
-  String get homeSoon;
+  /// **'Entrenamiento sugerido para hoy'**
+  String get todaySuggested;
+
+  /// No description provided for @streakDays.
+  ///
+  /// In es, this message translates to:
+  /// **'días seguidos'**
+  String get streakDays;
+
+  /// No description provided for @streakWeeks.
+  ///
+  /// In es, this message translates to:
+  /// **'semanas cumpliendo tu meta'**
+  String get streakWeeks;
+
+  /// No description provided for @weekProgress.
+  ///
+  /// In es, this message translates to:
+  /// **'Progreso semanal'**
+  String get weekProgress;
+
+  /// No description provided for @weekProgressCount.
+  ///
+  /// In es, this message translates to:
+  /// **'{done} de {goal} entrenamientos'**
+  String weekProgressCount(int done, int goal);
+
+  /// No description provided for @currentWeight.
+  ///
+  /// In es, this message translates to:
+  /// **'Peso actual'**
+  String get currentWeight;
+
+  /// No description provided for @weightToGoal.
+  ///
+  /// In es, this message translates to:
+  /// **'A {diff} kg de tu meta ({target} kg)'**
+  String weightToGoal(String diff, String target);
+
+  /// No description provided for @goalsTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Metas'**
+  String get goalsTitle;
+
+  /// No description provided for @goalsSubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Peso objetivo, entrenamientos por semana y calorías'**
+  String get goalsSubtitle;
+
+  /// No description provided for @goalTargetWeight.
+  ///
+  /// In es, this message translates to:
+  /// **'Peso objetivo (opcional)'**
+  String get goalTargetWeight;
+
+  /// No description provided for @goalWeeklyWorkouts.
+  ///
+  /// In es, this message translates to:
+  /// **'Entrenamientos por semana (1 a 7)'**
+  String get goalWeeklyWorkouts;
+
+  /// No description provided for @goalDailyCalories.
+  ///
+  /// In es, this message translates to:
+  /// **'Meta de calorías diarias (opcional)'**
+  String get goalDailyCalories;
+
+  /// No description provided for @goalsInvalid.
+  ///
+  /// In es, this message translates to:
+  /// **'Revisa los valores: peso 20–400 kg, 1–7 entrenamientos y calorías 500–10000.'**
+  String get goalsInvalid;
+
+  /// No description provided for @remindersTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Recordatorios'**
+  String get remindersTitle;
+
+  /// No description provided for @remindersSubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Avisos para entrenar en tus días y hora'**
+  String get remindersSubtitle;
+
+  /// No description provided for @remindersEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'Programa un aviso para no saltarte el entrenamiento.'**
+  String get remindersEmpty;
+
+  /// No description provided for @reminderAdd.
+  ///
+  /// In es, this message translates to:
+  /// **'Nuevo recordatorio'**
+  String get reminderAdd;
+
+  /// No description provided for @reminderDays.
+  ///
+  /// In es, this message translates to:
+  /// **'Días de la semana'**
+  String get reminderDays;
+
+  /// No description provided for @reminderPermissionDenied.
+  ///
+  /// In es, this message translates to:
+  /// **'Sin permiso de notificaciones. Actívalo en los ajustes del sistema.'**
+  String get reminderPermissionDenied;
+
+  /// No description provided for @reminderNotificationTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Hora de entrenar! 💪'**
+  String get reminderNotificationTitle;
+
+  /// No description provided for @reminderNotificationBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu rutina de hoy te está esperando.'**
+  String get reminderNotificationBody;
 
   /// No description provided for @tabMeasures.
   ///

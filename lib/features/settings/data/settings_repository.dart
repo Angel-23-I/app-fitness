@@ -13,6 +13,11 @@ class SettingsRepository {
       .watchSingleOrNull()
       .map((r) => r?.value);
 
+  Stream<Map<String, String>> watchAll() => _db
+      .select(_db.appSettings)
+      .watch()
+      .map((rows) => {for (final r in rows) r.key: r.value});
+
   Future<String?> get(String key) async => (await (_db.select(_db.appSettings)
             ..where((t) => t.key.equals(key)))
           .getSingleOrNull())

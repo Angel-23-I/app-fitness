@@ -49,7 +49,75 @@ class AppLocalizationsEs extends AppLocalizations {
   String get edit => 'Editar';
 
   @override
-  String get homeSoon => 'Tu resumen del día aparecerá aquí.';
+  String get todaySuggested => 'Entrenamiento sugerido para hoy';
+
+  @override
+  String get streakDays => 'días seguidos';
+
+  @override
+  String get streakWeeks => 'semanas cumpliendo tu meta';
+
+  @override
+  String get weekProgress => 'Progreso semanal';
+
+  @override
+  String weekProgressCount(int done, int goal) {
+    return '$done de $goal entrenamientos';
+  }
+
+  @override
+  String get currentWeight => 'Peso actual';
+
+  @override
+  String weightToGoal(String diff, String target) {
+    return 'A $diff kg de tu meta ($target kg)';
+  }
+
+  @override
+  String get goalsTitle => 'Metas';
+
+  @override
+  String get goalsSubtitle =>
+      'Peso objetivo, entrenamientos por semana y calorías';
+
+  @override
+  String get goalTargetWeight => 'Peso objetivo (opcional)';
+
+  @override
+  String get goalWeeklyWorkouts => 'Entrenamientos por semana (1 a 7)';
+
+  @override
+  String get goalDailyCalories => 'Meta de calorías diarias (opcional)';
+
+  @override
+  String get goalsInvalid =>
+      'Revisa los valores: peso 20–400 kg, 1–7 entrenamientos y calorías 500–10000.';
+
+  @override
+  String get remindersTitle => 'Recordatorios';
+
+  @override
+  String get remindersSubtitle => 'Avisos para entrenar en tus días y hora';
+
+  @override
+  String get remindersEmpty =>
+      'Programa un aviso para no saltarte el entrenamiento.';
+
+  @override
+  String get reminderAdd => 'Nuevo recordatorio';
+
+  @override
+  String get reminderDays => 'Días de la semana';
+
+  @override
+  String get reminderPermissionDenied =>
+      'Sin permiso de notificaciones. Actívalo en los ajustes del sistema.';
+
+  @override
+  String get reminderNotificationTitle => '¡Hora de entrenar! 💪';
+
+  @override
+  String get reminderNotificationBody => 'Tu rutina de hoy te está esperando.';
 
   @override
   String get tabMeasures => 'Medidas';

@@ -4,8 +4,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fittrack/app.dart';
 import 'package:fittrack/core/db/app_database.dart';
 import 'package:fittrack/core/db/enums.dart';
+import 'package:fittrack/features/goals/domain/goals.dart';
+import 'package:fittrack/features/goals/data/goals_providers.dart';
+import 'package:fittrack/features/progress/data/body_repository.dart';
 import 'package:fittrack/features/routines/data/routine_repository.dart';
 import 'package:fittrack/features/routines/domain/routine_models.dart';
+import 'package:fittrack/features/workout/data/workout_repository.dart';
+import 'package:fittrack/features/workout/domain/workout_models.dart';
 
 void main() {
   testWidgets('bottom navigation switches between tabs', (tester) async {
@@ -13,12 +18,17 @@ void main() {
     await tester.pumpWidget(ProviderScope(
       overrides: [
         routinesProvider.overrideWith((ref) => Stream.value(<RoutineSummary>[])),
+        historyProvider.overrideWith((ref) => Stream.value(<WorkoutSummary>[])),
+        activeWorkoutProvider.overrideWith((ref) => Stream.value(null)),
+        bodyEntriesProvider.overrideWith((ref) => Stream.value(<BodyEntry>[])),
+        goalsProvider.overrideWith((ref) => Stream.value(const Goals())),
       ],
       child: const FitTrackApp(),
     ));
     await tester.pumpAndSettle();
 
-    expect(find.text('Tu resumen del día aparecerá aquí.'), findsOneWidget);
+    expect(find.text('Entrenamiento sugerido para hoy'), findsOneWidget);
+    expect(find.text('Progreso semanal'), findsOneWidget);
     await tester.tap(find.text('Rutinas'));
     await tester.pumpAndSettle();
     expect(find.text('Crea tu primera rutina para empezar a entrenar.'), findsOneWidget);

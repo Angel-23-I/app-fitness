@@ -10,6 +10,8 @@ import '../../features/workout/presentation/history_page.dart';
 import '../../features/workout/presentation/records_page.dart';
 import '../../features/workout/presentation/workout_page.dart';
 import '../../features/progress/presentation/photo_compare_page.dart';
+import '../../features/goals/presentation/goals_page.dart';
+import '../../features/goals/presentation/reminders_page.dart';
 import '../../features/nutrition/presentation/meals_page.dart';
 import '../../features/progress/presentation/progress_page.dart';
 import '../../features/routines/presentation/routines_page.dart';
@@ -46,6 +48,8 @@ GoRouter createRouter() => GoRouter(
             idB: int.parse(s.uri.queryParameters['b']!),
           ),
         ),
+        GoRoute(path: '/goals', builder: (_, _) => const GoalsPage()),
+        GoRoute(path: '/reminders', builder: (_, _) => const RemindersPage()),
         GoRoute(path: '/records', builder: (_, _) => const RecordsPage()),
         StatefulShellRoute.indexedStack(
           builder: (context, state, shell) => _NavShell(shell: shell),
