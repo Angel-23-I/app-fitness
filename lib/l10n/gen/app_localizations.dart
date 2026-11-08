@@ -148,17 +148,35 @@ abstract class AppLocalizations {
   /// **'Reintentar'**
   String get retry;
 
+  /// No description provided for @cancel.
+  ///
+  /// In es, this message translates to:
+  /// **'Cancelar'**
+  String get cancel;
+
+  /// No description provided for @save.
+  ///
+  /// In es, this message translates to:
+  /// **'Guardar'**
+  String get save;
+
+  /// No description provided for @delete.
+  ///
+  /// In es, this message translates to:
+  /// **'Borrar'**
+  String get delete;
+
+  /// No description provided for @edit.
+  ///
+  /// In es, this message translates to:
+  /// **'Editar'**
+  String get edit;
+
   /// No description provided for @homeSoon.
   ///
   /// In es, this message translates to:
   /// **'Tu resumen del día aparecerá aquí.'**
   String get homeSoon;
-
-  /// No description provided for @routinesSoon.
-  ///
-  /// In es, this message translates to:
-  /// **'Crea tu primera rutina para empezar a entrenar.'**
-  String get routinesSoon;
 
   /// No description provided for @progressSoon.
   ///
@@ -177,6 +195,264 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'Aquí configurarás tus metas, recordatorios y la clave de API.'**
   String get settingsSoon;
+
+  /// No description provided for @muscleChest.
+  ///
+  /// In es, this message translates to:
+  /// **'Pecho'**
+  String get muscleChest;
+
+  /// No description provided for @muscleBack.
+  ///
+  /// In es, this message translates to:
+  /// **'Espalda'**
+  String get muscleBack;
+
+  /// No description provided for @muscleShoulders.
+  ///
+  /// In es, this message translates to:
+  /// **'Hombros'**
+  String get muscleShoulders;
+
+  /// No description provided for @muscleBiceps.
+  ///
+  /// In es, this message translates to:
+  /// **'Bíceps'**
+  String get muscleBiceps;
+
+  /// No description provided for @muscleTriceps.
+  ///
+  /// In es, this message translates to:
+  /// **'Tríceps'**
+  String get muscleTriceps;
+
+  /// No description provided for @muscleLegs.
+  ///
+  /// In es, this message translates to:
+  /// **'Piernas'**
+  String get muscleLegs;
+
+  /// No description provided for @muscleGlutes.
+  ///
+  /// In es, this message translates to:
+  /// **'Glúteos'**
+  String get muscleGlutes;
+
+  /// No description provided for @muscleCore.
+  ///
+  /// In es, this message translates to:
+  /// **'Core'**
+  String get muscleCore;
+
+  /// No description provided for @muscleCardio.
+  ///
+  /// In es, this message translates to:
+  /// **'Cardio'**
+  String get muscleCardio;
+
+  /// No description provided for @muscleFullBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Cuerpo completo'**
+  String get muscleFullBody;
+
+  /// No description provided for @equipBarbell.
+  ///
+  /// In es, this message translates to:
+  /// **'Barra'**
+  String get equipBarbell;
+
+  /// No description provided for @equipDumbbell.
+  ///
+  /// In es, this message translates to:
+  /// **'Mancuernas'**
+  String get equipDumbbell;
+
+  /// No description provided for @equipMachine.
+  ///
+  /// In es, this message translates to:
+  /// **'Máquina'**
+  String get equipMachine;
+
+  /// No description provided for @equipCable.
+  ///
+  /// In es, this message translates to:
+  /// **'Polea'**
+  String get equipCable;
+
+  /// No description provided for @equipBodyweight.
+  ///
+  /// In es, this message translates to:
+  /// **'Peso corporal'**
+  String get equipBodyweight;
+
+  /// No description provided for @equipOther.
+  ///
+  /// In es, this message translates to:
+  /// **'Otro'**
+  String get equipOther;
+
+  /// No description provided for @exercisesTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Ejercicios'**
+  String get exercisesTitle;
+
+  /// No description provided for @exercisesPickTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Elegir ejercicios'**
+  String get exercisesPickTitle;
+
+  /// No description provided for @exercisesSearch.
+  ///
+  /// In es, this message translates to:
+  /// **'Buscar ejercicio'**
+  String get exercisesSearch;
+
+  /// No description provided for @exercisesAll.
+  ///
+  /// In es, this message translates to:
+  /// **'Todos'**
+  String get exercisesAll;
+
+  /// No description provided for @exercisesEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'No hay ejercicios que coincidan con tu búsqueda.'**
+  String get exercisesEmpty;
+
+  /// No description provided for @exerciseNew.
+  ///
+  /// In es, this message translates to:
+  /// **'Nuevo ejercicio'**
+  String get exerciseNew;
+
+  /// No description provided for @exerciseName.
+  ///
+  /// In es, this message translates to:
+  /// **'Nombre'**
+  String get exerciseName;
+
+  /// No description provided for @exerciseMuscle.
+  ///
+  /// In es, this message translates to:
+  /// **'Grupo muscular'**
+  String get exerciseMuscle;
+
+  /// No description provided for @exerciseEquipment.
+  ///
+  /// In es, this message translates to:
+  /// **'Equipo'**
+  String get exerciseEquipment;
+
+  /// No description provided for @exerciseCustom.
+  ///
+  /// In es, this message translates to:
+  /// **'Propio'**
+  String get exerciseCustom;
+
+  /// No description provided for @exerciseInUse.
+  ///
+  /// In es, this message translates to:
+  /// **'No se puede borrar: el ejercicio se usa en una rutina o en tu historial.'**
+  String get exerciseInUse;
+
+  /// No description provided for @exercisesAddSelected.
+  ///
+  /// In es, this message translates to:
+  /// **'Añadir ({count})'**
+  String exercisesAddSelected(int count);
+
+  /// No description provided for @routinesEmpty.
+  ///
+  /// In es, this message translates to:
+  /// **'Crea tu primera rutina para empezar a entrenar.'**
+  String get routinesEmpty;
+
+  /// No description provided for @routineNew.
+  ///
+  /// In es, this message translates to:
+  /// **'Nueva rutina'**
+  String get routineNew;
+
+  /// No description provided for @routineEdit.
+  ///
+  /// In es, this message translates to:
+  /// **'Editar rutina'**
+  String get routineEdit;
+
+  /// No description provided for @routineName.
+  ///
+  /// In es, this message translates to:
+  /// **'Nombre de la rutina'**
+  String get routineName;
+
+  /// No description provided for @routineNameRequired.
+  ///
+  /// In es, this message translates to:
+  /// **'Ponle un nombre a la rutina'**
+  String get routineNameRequired;
+
+  /// No description provided for @routineAddExercises.
+  ///
+  /// In es, this message translates to:
+  /// **'Añadir ejercicios'**
+  String get routineAddExercises;
+
+  /// No description provided for @routineNoExercises.
+  ///
+  /// In es, this message translates to:
+  /// **'Añade al menos un ejercicio.'**
+  String get routineNoExercises;
+
+  /// No description provided for @routineExerciseCount.
+  ///
+  /// In es, this message translates to:
+  /// **'{count, plural, =0{Sin ejercicios} =1{1 ejercicio} other{{count} ejercicios}}'**
+  String routineExerciseCount(int count);
+
+  /// No description provided for @routineDeleteTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¿Borrar rutina?'**
+  String get routineDeleteTitle;
+
+  /// No description provided for @routineDeleteBody.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu historial de entrenamientos se conserva.'**
+  String get routineDeleteBody;
+
+  /// No description provided for @historyTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Historial'**
+  String get historyTitle;
+
+  /// No description provided for @workoutStart.
+  ///
+  /// In es, this message translates to:
+  /// **'Entrenar'**
+  String get workoutStart;
+
+  /// No description provided for @sets.
+  ///
+  /// In es, this message translates to:
+  /// **'Series'**
+  String get sets;
+
+  /// No description provided for @reps.
+  ///
+  /// In es, this message translates to:
+  /// **'Reps'**
+  String get reps;
+
+  /// No description provided for @routineSetsReps.
+  ///
+  /// In es, this message translates to:
+  /// **'{sets} × {reps}'**
+  String routineSetsReps(int sets, int reps);
 }
 
 class _AppLocalizationsDelegate

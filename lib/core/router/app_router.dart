@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/dashboard/presentation/home_page.dart';
+import '../../features/exercises/presentation/exercises_page.dart';
+import '../../features/routines/presentation/routine_edit_page.dart';
 import '../../features/nutrition/presentation/meals_page.dart';
 import '../../features/progress/presentation/progress_page.dart';
 import '../../features/routines/presentation/routines_page.dart';
@@ -14,6 +16,15 @@ final routerProvider = Provider<GoRouter>((ref) => createRouter());
 GoRouter createRouter() => GoRouter(
       initialLocation: '/',
       routes: [
+        GoRoute(
+          path: '/exercises',
+          builder: (_, s) => ExercisesPage(pickMode: s.uri.queryParameters['pick'] == '1'),
+        ),
+        GoRoute(
+          path: '/routines/edit',
+          builder: (_, s) =>
+              RoutineEditPage(routineId: int.tryParse(s.uri.queryParameters['id'] ?? '')),
+        ),
         StatefulShellRoute.indexedStack(
           builder: (context, state, shell) => _NavShell(shell: shell),
           branches: [

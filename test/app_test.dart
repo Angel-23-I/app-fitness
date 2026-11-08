@@ -4,14 +4,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fittrack/app.dart';
 import 'package:fittrack/core/db/app_database.dart';
 import 'package:fittrack/core/db/enums.dart';
-import 'package:fittrack/core/db/providers.dart';
+import 'package:fittrack/features/routines/data/routine_repository.dart';
+import 'package:fittrack/features/routines/domain/routine_models.dart';
 
 void main() {
   testWidgets('bottom navigation switches between tabs', (tester) async {
-    final db = AppDatabase(NativeDatabase.memory());
-    addTearDown(db.close);
+    // Streams are faked: drift's real async work does not run inside testWidgets' fake clock.
     await tester.pumpWidget(ProviderScope(
-      overrides: [databaseProvider.overrideWithValue(db)],
+      overrides: [
+        routinesProvider.overrideWith((ref) => Stream.value(<RoutineSummary>[])),
+      ],
       child: const FitTrackApp(),
     ));
     await tester.pumpAndSettle();
@@ -33,6 +35,6 @@ void main() {
 
     await (db.delete(db.routines)..where((t) => t.id.equals(r))).go();
     expect(await db.select(db.routineExercises).get(), isEmpty);
-    expect((await db.select(db.exercises).get()).single.name, 'Press banca');
+    expect((await db.select(db.exercises).get()).any((e) => e.name == 'Press banca'), isTrue);
   });
 }
