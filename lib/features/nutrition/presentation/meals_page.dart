@@ -4,8 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/db/enums.dart';
+import '../../../core/theme/app_theme.dart';
 import '../../../core/ui/enum_labels.dart';
 import '../../../core/utils/format.dart';
+import '../../../core/widgets/fit_widgets.dart';
 import '../../../core/widgets/state_views.dart';
 import '../../../l10n/gen/app_localizations.dart';
 import '../../goals/data/goals_providers.dart';
@@ -24,43 +27,63 @@ class MealsPage extends ConsumerWidget {
     final isToday = day == DateTime(today.year, today.month, today.day);
     final hasKey = ref.watch(foodAnalyzerProvider) != null;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.navMeals)),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: null,
         onPressed: () => _addMenu(context, hasKey),
-        icon: const Icon(Icons.add),
+        icon: const Icon(Icons.add_rounded),
         label: Text(l10n.mealAdd),
       ),
-      body: Column(children: [
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          IconButton(
-              icon: const Icon(Icons.chevron_left),
-              onPressed: () => ref.read(selectedDayProvider.notifier).shift(-1)),
-          Text(isToday ? l10n.today : fmtDate(day), style: Theme.of(context).textTheme.titleMedium),
-          IconButton(
-              icon: const Icon(Icons.chevron_right),
-              onPressed: isToday ? null : () => ref.read(selectedDayProvider.notifier).shift(1)),
-        ]),
-        Expanded(
-          child: AsyncBody<List<MealWithItems>>(
-            value: ref.watch(dayMealsProvider),
-            onRetry: () => ref.invalidate(dayMealsProvider),
-            builder: (meals) => ListView(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 96),
-              children: [
-                _TotalsCard(meals),
-                const SizedBox(height: 12),
-                if (!hasKey) const _AiDisabledCard(),
-                if (meals.isEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 32),
-                    child: EmptyState(icon: Icons.restaurant, message: l10n.mealsEmpty),
-                  ),
-                for (final m in meals) _MealTile(m),
-              ],
+      body: SafeArea(
+        bottom: false,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          ScreenHeader(title: l10n.navMeals, actions: [
+            Container(
+              decoration: BoxDecoration(
+                color: AppColors.surface,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: AppColors.border),
+              ),
+              child: Row(mainAxisSize: MainAxisSize.min, children: [
+                IconButton(
+                    tooltip: MaterialLocalizations.of(context).previousPageTooltip,
+                    icon: const Icon(Icons.chevron_left_rounded),
+                    onPressed: () => ref.read(selectedDayProvider.notifier).shift(-1)),
+                Text(isToday ? l10n.today : DateFormat.MMMd('es').format(day),
+                    style: const TextStyle(fontWeight: FontWeight.w700)),
+                IconButton(
+                    tooltip: MaterialLocalizations.of(context).nextPageTooltip,
+                    icon: const Icon(Icons.chevron_right_rounded),
+                    onPressed: isToday ? null : () => ref.read(selectedDayProvider.notifier).shift(1)),
+              ]),
+            ),
+          ]),
+          Expanded(
+            child: AsyncBody<List<MealWithItems>>(
+              value: ref.watch(dayMealsProvider),
+              onRetry: () => ref.invalidate(dayMealsProvider),
+              builder: (meals) => ListView(
+                padding: const EdgeInsets.fromLTRB(20, 8, 20, 96),
+                children: [
+                  _TotalsCard(meals),
+                  const SizedBox(height: 14),
+                  if (hasKey)
+                    _ScanButton(onTap: () => _pick(context, ImageSource.camera))
+                  else
+                    const _AiDisabledCard(),
+                  const SizedBox(height: 14),
+                  if (meals.isEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: EmptyState(icon: Icons.restaurant_rounded, message: l10n.mealsEmpty),
+                    ),
+                  for (final m in meals)
+                    Padding(padding: const EdgeInsets.only(bottom: 10), child: _MealTile(m)),
+                ],
+              ),
             ),
           ),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 
@@ -111,21 +134,65 @@ class MealsPage extends ConsumerWidget {
   }
 }
 
+class _ScanButton extends StatelessWidget {
+  const _ScanButton({required this.onTap});
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Material(
+      color: AppColors.lime,
+      borderRadius: BorderRadius.circular(20),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(20),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Row(children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(color: AppColors.bg, borderRadius: BorderRadius.circular(12)),
+              child: const Icon(Icons.photo_camera_rounded, color: AppColors.lime, size: 20),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(l10n.scanMealTitle,
+                    style: const TextStyle(color: AppColors.bg, fontWeight: FontWeight.w700, fontSize: 16)),
+                Text(l10n.scanMealSubtitle, style: const TextStyle(color: Color(0xFF2E3A10), fontSize: 12)),
+              ]),
+            ),
+            const Icon(Icons.chevron_right_rounded, color: AppColors.bg),
+          ]),
+        ),
+      ),
+    );
+  }
+}
+
 class _AiDisabledCard extends StatelessWidget {
   const _AiDisabledCard();
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return Card(
-      color: Theme.of(context).colorScheme.surfaceContainerHighest,
-      child: ListTile(
-        leading: const Icon(Icons.auto_awesome_outlined),
-        title: Text(l10n.aiDisabledTitle),
-        subtitle: Text(l10n.aiDisabledBody),
-        trailing: TextButton(
-            onPressed: () => context.push('/settings/api-key'), child: Text(l10n.configureKey)),
-      ),
+    return Panel(
+      radius: 20,
+      padding: const EdgeInsets.fromLTRB(14, 12, 8, 12),
+      child: Row(children: [
+        const Icon(Icons.auto_awesome_rounded, color: AppColors.lime),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(l10n.aiDisabledTitle, style: const TextStyle(fontWeight: FontWeight.w700)),
+            const SizedBox(height: 2),
+            Text(l10n.aiDisabledBody, style: const TextStyle(fontSize: 12, color: AppColors.muted)),
+          ]),
+        ),
+        TextButton(onPressed: () => context.push('/settings/api-key'), child: Text(l10n.configureKey)),
+      ]),
     );
   }
 }
@@ -144,27 +211,55 @@ class _TotalsCard extends ConsumerWidget {
       carbsG: meals.fold(0.0, (s, m) => s + m.totals.carbsG),
       fatG: meals.fold(0.0, (s, m) => s + m.totals.fatG),
     );
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(goal == null ? '${t.kcal.round()} kcal' : '${t.kcal.round()} / $goal kcal',
-              style: Theme.of(context).textTheme.headlineSmall),
-          if (goal != null) ...[
-            const SizedBox(height: 8),
-            LinearProgressIndicator(
-                value: (t.kcal / goal).clamp(0, 1).toDouble(),
-                minHeight: 10,
-                borderRadius: BorderRadius.circular(8)),
-          ],
-          const SizedBox(height: 8),
-          Text(l10n.macrosLine(fmtNum(t.proteinG.roundToDouble()), fmtNum(t.carbsG.roundToDouble()),
-              fmtNum(t.fatG.roundToDouble()))),
-        ]),
-      ),
+    final kcal = t.kcal.round();
+    final left = goal == null ? null : goal - kcal;
+    // Bars show each macro's share of the day's calories (4 / 4 / 9 kcal per gram).
+    final macroKcal = t.proteinG * 4 + t.carbsG * 4 + t.fatG * 9;
+    double share(double k) => macroKcal == 0 ? 0 : k / macroKcal;
+    final macros = [
+      (l10n.macroProtein, t.proteinG, share(t.proteinG * 4), AppColors.accent),
+      (l10n.macroCarbs, t.carbsG, share(t.carbsG * 4), AppColors.sky),
+      (l10n.macroFat, t.fatG, share(t.fatG * 9), AppColors.lime),
+    ];
+    return Panel(
+      child: Row(children: [
+        ActivityRings(
+          size: 140,
+          stroke: 12,
+          rings: [Ring(goal == null ? (kcal > 0 ? 1 : 0) : kcal / goal, AppColors.accent, track: AppColors.surfaceHigh)],
+          semanticsLabel: goal == null ? '$kcal kcal' : '$kcal / $goal kcal',
+          center: Column(mainAxisSize: MainAxisSize.min, children: [
+            Text(fmtThousands(left?.abs() ?? kcal), style: display(36)),
+            Text(left == null ? l10n.kcalEaten : (left >= 0 ? l10n.kcalLeft : l10n.kcalOver),
+                style: const TextStyle(fontSize: 11, color: AppColors.muted)),
+          ]),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            for (final (name, grams, value, color) in macros) ...[
+              Row(children: [
+                Expanded(child: Text(name, style: const TextStyle(fontSize: 12, color: AppColors.textSoft))),
+                Text('${fmtNum(grams.roundToDouble())} g',
+                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
+              ]),
+              const SizedBox(height: 5),
+              ThinBar(value: value, color: color),
+              const SizedBox(height: 12),
+            ],
+          ]),
+        ),
+      ]),
     );
   }
 }
+
+const _mealColors = {
+  MealType.breakfast: AppColors.gold,
+  MealType.lunch: AppColors.accent,
+  MealType.dinner: AppColors.sky,
+  MealType.snack: AppColors.lime,
+};
 
 class _MealTile extends ConsumerWidget {
   const _MealTile(this.m);
@@ -177,17 +272,42 @@ class _MealTile extends ConsumerWidget {
       key: ValueKey(m.meal.id),
       direction: DismissDirection.endToStart,
       background: Container(
-        color: Theme.of(context).colorScheme.errorContainer,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.errorContainer,
+          borderRadius: BorderRadius.circular(18),
+        ),
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 16),
-        child: const Icon(Icons.delete_outline),
+        child: const Icon(Icons.delete_outline_rounded),
       ),
       onDismissed: (_) => ref.read(mealRepositoryProvider).delete(m.meal.id),
-      child: ListTile(
-        contentPadding: EdgeInsets.zero,
-        title: Text('${m.meal.mealType.label(l10n)} · ${DateFormat.Hm().format(m.meal.eatenAt)}'),
-        subtitle: Text(m.items.map((i) => i.name).join(', ')),
-        trailing: Text('${m.totals.kcal.round()} kcal', style: Theme.of(context).textTheme.titleSmall),
+      child: Panel(
+        radius: 18,
+        padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+        child: Row(children: [
+          Container(
+            width: 10,
+            height: 40,
+            decoration: BoxDecoration(
+              color: _mealColors[m.meal.mealType] ?? AppColors.border,
+              borderRadius: BorderRadius.circular(5),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text('${m.meal.mealType.label(l10n)} · ${DateFormat.Hm().format(m.meal.eatenAt)}',
+                  style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
+              const SizedBox(height: 2),
+              Text(m.items.map((i) => i.name).join(', '),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 12, color: AppColors.muted)),
+            ]),
+          ),
+          const SizedBox(width: 8),
+          BigValue(fmtThousands(m.totals.kcal), unit: 'kcal', size: 22),
+        ]),
       ),
     );
   }

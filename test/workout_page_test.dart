@@ -55,7 +55,7 @@ void main() {
         restSecondsProvider.overrideWith((ref) => Stream.value(90)),
       ],
       child: MaterialApp(
-        theme: AppTheme.light(),
+        theme: AppTheme.dark(),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: const WorkoutPage(workoutId: 1),
@@ -65,15 +65,16 @@ void main() {
     await tester.pump();
     await tester.pump();
 
-    expect(find.text('Press banca'), findsOneWidget);
-    expect(find.text('Descanso 01:30'), findsNothing);
+    expect(find.text('PRESS BANCA'), findsOneWidget);
+    expect(find.text('DESCANSO'), findsNothing);
 
     await tester.tap(find.byTooltip('Serie completada'));
     await tester.pump();
     await tester.pump();
 
     verify(() => repo.updateSet(10, weightKg: 60, reps: 8, completed: true)).called(1);
-    expect(find.textContaining('Descanso 01:'), findsOneWidget);
+    expect(find.text('DESCANSO'), findsOneWidget);
+    expect(find.textContaining('01:'), findsOneWidget);
 
     // Unmount so the rest timer's periodic Timer is cancelled.
     await tester.pumpWidget(const SizedBox());

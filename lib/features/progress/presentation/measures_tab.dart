@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/db/app_database.dart';
+import '../../../core/theme/app_theme.dart';
+import '../../../core/widgets/fit_widgets.dart';
 import '../../../core/utils/format.dart';
 import '../../../core/widgets/state_views.dart';
 import '../../../l10n/gen/app_localizations.dart';
@@ -41,6 +43,7 @@ class _MeasuresTabState extends ConsumerState<MeasuresTab> {
     };
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: null,
         onPressed: () => showEntrySheet(context),
         icon: const Icon(Icons.add),
         label: Text(l10n.entryAdd),
@@ -53,18 +56,37 @@ class _MeasuresTabState extends ConsumerState<MeasuresTab> {
         builder: (entries) {
           final points = metricSeries(entries, _metric, _range, DateTime.now());
           final list = entries.reversed.toList();
-          return ListView(padding: const EdgeInsets.fromLTRB(16, 12, 16, 96), children: [
-            SegmentedButton<ChartRange>(
-              showSelectedIcon: false,
-              segments: [
-                for (final r in ChartRange.values)
-                  ButtonSegment(value: r, label: Text(rangeLabels[r]!)),
-              ],
-              selected: {_range},
-              onSelectionChanged: (s) => setState(() => _range = s.first),
+          final latest = [for (final e in entries) ?_metric.of(e)];
+          final change = points.length < 2 ? null : points.last.$2 - points.first.$2;
+          return ListView(padding: const EdgeInsets.fromLTRB(20, 12, 20, 96), children: [
+            Panel(
+              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Expanded(
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      Text(_metric.label(l10n), style: const TextStyle(fontSize: 12, color: AppColors.muted)),
+                      BigValue(latest.isEmpty ? '—' : fmtNum(latest.last), unit: _metric.unit, size: 52),
+                      if (change != null && change != 0)
+                        Text('${change < 0 ? '↓' : '↑'} ${fmtNum(change.abs())} ${_metric.unit} · ${rangeLabels[_range]}',
+                            style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: change < 0 ? AppColors.lime : AppColors.accent)),
+                    ]),
+                  ),
+                  for (final r in ChartRange.values)
+                    _RangePill(
+                      label: rangeLabels[r]!,
+                      selected: _range == r,
+                      onTap: () => setState(() => _range = r),
+                    ),
+                ]),
+                const SizedBox(height: 8),
+                MetricChart(points: points, metric: _metric),
+              ]),
             ),
-            const SizedBox(height: 8),
-            Wrap(spacing: 8, children: [
+            const SizedBox(height: 14),
+            Wrap(spacing: 8, runSpacing: 8, children: [
               for (final m in BodyMetric.values)
                 ChoiceChip(
                   label: Text(m.label(l10n)),
@@ -73,14 +95,43 @@ class _MeasuresTabState extends ConsumerState<MeasuresTab> {
                 ),
             ]),
             const SizedBox(height: 16),
-            MetricChart(points: points, metric: _metric),
-            const SizedBox(height: 16),
             for (final e in list) _EntryTile(e),
           ]);
         },
       ),
     );
   }
+}
+
+class _RangePill extends StatelessWidget {
+  const _RangePill({required this.label, required this.selected, required this.onTap});
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+        button: true,
+        selected: selected,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(10),
+          child: Container(
+            constraints: const BoxConstraints(minHeight: 36, minWidth: 36),
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(horizontal: 9),
+            decoration: BoxDecoration(
+              color: selected ? AppColors.text : Colors.transparent,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(label,
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: selected ? AppColors.bg : AppColors.muted)),
+          ),
+        ),
+      );
 }
 
 class _EntryTile extends ConsumerWidget {

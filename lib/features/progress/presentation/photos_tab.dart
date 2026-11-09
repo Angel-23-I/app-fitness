@@ -119,6 +119,7 @@ class _PhotosTabState extends ConsumerState<PhotosTab> {
     final l10n = AppLocalizations.of(context);
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: null,
         onPressed: _addMenu,
         icon: const Icon(Icons.add_a_photo_outlined),
         label: Text(l10n.photoAdd),

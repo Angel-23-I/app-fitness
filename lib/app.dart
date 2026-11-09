@@ -12,8 +12,8 @@ class FitTrackApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) => MaterialApp.router(
         onGenerateTitle: (c) => AppLocalizations.of(c).appName,
-        theme: AppTheme.light(),
-        darkTheme: AppTheme.dark(),
+        theme: AppTheme.dark(),
+        themeMode: ThemeMode.dark,
         routerConfig: ref.watch(routerProvider),
         localizationsDelegates: const [
           AppLocalizations.delegate,

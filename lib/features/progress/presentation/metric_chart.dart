@@ -46,7 +46,11 @@ class MetricChart extends StatelessWidget {
           maxX: maxX,
           minY: lo - pad,
           maxY: hi + pad,
-          gridData: const FlGridData(drawVerticalLine: false),
+          gridData: FlGridData(
+            drawVerticalLine: false,
+            getDrawingHorizontalLine: (_) =>
+                FlLine(color: scheme.outlineVariant, strokeWidth: 1, dashArray: const [3, 5]),
+          ),
           borderData: FlBorderData(show: false),
           titlesData: FlTitlesData(
             topTitles: const AxisTitles(),
@@ -82,8 +86,19 @@ class MetricChart extends StatelessWidget {
               preventCurveOverShooting: true,
               color: scheme.primary,
               barWidth: 3,
-              dotData: FlDotData(show: spots.length <= 30),
-              belowBarData: BarAreaData(show: true, color: scheme.primary.withValues(alpha: 0.12)),
+              dotData: FlDotData(
+                checkToShowDot: (spot, _) => spot == spots.last,
+                getDotPainter: (_, _, _, _) => FlDotCirclePainter(
+                    radius: 5, color: scheme.surface, strokeWidth: 3, strokeColor: scheme.primary),
+              ),
+              belowBarData: BarAreaData(
+                show: true,
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [scheme.primary.withValues(alpha: 0.35), scheme.primary.withValues(alpha: 0)],
+                ),
+              ),
             ),
           ],
         )),

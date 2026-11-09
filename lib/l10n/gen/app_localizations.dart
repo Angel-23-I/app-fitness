@@ -1185,6 +1185,192 @@ abstract class AppLocalizations {
   /// In es, this message translates to:
   /// **'{sets} × {reps}'**
   String routineSetsReps(int sets, int reps);
+
+  /// No description provided for @homeHeadlineLead.
+  ///
+  /// In es, this message translates to:
+  /// **'Vamos a'**
+  String get homeHeadlineLead;
+
+  /// No description provided for @homeHeadlineAccent.
+  ///
+  /// In es, this message translates to:
+  /// **'entrenar'**
+  String get homeHeadlineAccent;
+
+  /// No description provided for @ringWorkouts.
+  ///
+  /// In es, this message translates to:
+  /// **'Entrenos'**
+  String get ringWorkouts;
+
+  /// No description provided for @ringCalories.
+  ///
+  /// In es, this message translates to:
+  /// **'Calorías'**
+  String get ringCalories;
+
+  /// No description provided for @ringStreak.
+  ///
+  /// In es, this message translates to:
+  /// **'Racha'**
+  String get ringStreak;
+
+  /// No description provided for @daysCount.
+  ///
+  /// In es, this message translates to:
+  /// **'{count, plural, =1{1 día} other{{count} días}}'**
+  String daysCount(int count);
+
+  /// No description provided for @weeksCount.
+  ///
+  /// In es, this message translates to:
+  /// **'{count, plural, =1{1 semana} other{{count} semanas}}'**
+  String weeksCount(int count);
+
+  /// No description provided for @ringsSemantics.
+  ///
+  /// In es, this message translates to:
+  /// **'Esta semana: {done} de {goal} entrenamientos. Racha de {streak} días.'**
+  String ringsSemantics(int done, int goal, int streak);
+
+  /// No description provided for @weekGoalStreak.
+  ///
+  /// In es, this message translates to:
+  /// **'Semanas cumpliendo tu meta'**
+  String get weekGoalStreak;
+
+  /// No description provided for @kcalLeft.
+  ///
+  /// In es, this message translates to:
+  /// **'kcal restantes'**
+  String get kcalLeft;
+
+  /// No description provided for @kcalOver.
+  ///
+  /// In es, this message translates to:
+  /// **'kcal de más'**
+  String get kcalOver;
+
+  /// No description provided for @kcalEaten.
+  ///
+  /// In es, this message translates to:
+  /// **'kcal hoy'**
+  String get kcalEaten;
+
+  /// No description provided for @macroProtein.
+  ///
+  /// In es, this message translates to:
+  /// **'Proteína'**
+  String get macroProtein;
+
+  /// No description provided for @macroCarbs.
+  ///
+  /// In es, this message translates to:
+  /// **'Carbohidratos'**
+  String get macroCarbs;
+
+  /// No description provided for @macroFat.
+  ///
+  /// In es, this message translates to:
+  /// **'Grasas'**
+  String get macroFat;
+
+  /// No description provided for @scanMealTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Escanear comida con IA'**
+  String get scanMealTitle;
+
+  /// No description provided for @scanMealSubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Haz una foto y revisa la estimación'**
+  String get scanMealSubtitle;
+
+  /// No description provided for @exerciseOf.
+  ///
+  /// In es, this message translates to:
+  /// **'Ejercicio {index} de {total}'**
+  String exerciseOf(int index, int total);
+
+  /// No description provided for @setLabel.
+  ///
+  /// In es, this message translates to:
+  /// **'Serie'**
+  String get setLabel;
+
+  /// No description provided for @myRoutines.
+  ///
+  /// In es, this message translates to:
+  /// **'Mis rutinas'**
+  String get myRoutines;
+
+  /// No description provided for @workoutDoneTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'¡Entrenamiento completado!'**
+  String get workoutDoneTitle;
+
+  /// No description provided for @workoutDoneSubtitle.
+  ///
+  /// In es, this message translates to:
+  /// **'{name} · buen trabajo hoy'**
+  String workoutDoneSubtitle(String name);
+
+  /// No description provided for @statDuration.
+  ///
+  /// In es, this message translates to:
+  /// **'Duración'**
+  String get statDuration;
+
+  /// No description provided for @statVolume.
+  ///
+  /// In es, this message translates to:
+  /// **'Peso levantado'**
+  String get statVolume;
+
+  /// No description provided for @statSets.
+  ///
+  /// In es, this message translates to:
+  /// **'Series'**
+  String get statSets;
+
+  /// No description provided for @statExercises.
+  ///
+  /// In es, this message translates to:
+  /// **'Ejercicios'**
+  String get statExercises;
+
+  /// No description provided for @streakTitle.
+  ///
+  /// In es, this message translates to:
+  /// **'Tu racha'**
+  String get streakTitle;
+
+  /// No description provided for @streakKeepGoing.
+  ///
+  /// In es, this message translates to:
+  /// **'{count, plural, =1{¡Primer día! Vuelve mañana para seguir sumando.} other{¡{count} días seguidos entrenando! No la rompas.}}'**
+  String streakKeepGoing(int count);
+
+  /// No description provided for @weekThisWeek.
+  ///
+  /// In es, this message translates to:
+  /// **'Esta semana'**
+  String get weekThisWeek;
+
+  /// No description provided for @viewDetail.
+  ///
+  /// In es, this message translates to:
+  /// **'Ver detalle'**
+  String get viewDetail;
+
+  /// No description provided for @backHome.
+  ///
+  /// In es, this message translates to:
+  /// **'Volver al inicio'**
+  String get backHome;
 }
 
 class _AppLocalizationsDelegate

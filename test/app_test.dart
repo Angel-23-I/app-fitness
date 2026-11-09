@@ -29,9 +29,9 @@ void main() {
     ));
     await tester.pumpAndSettle();
 
-    expect(find.text('Entrenamiento sugerido para hoy'), findsOneWidget);
-    expect(find.text('Progreso semanal'), findsOneWidget);
-    await tester.tap(find.text('Rutinas'));
+    expect(find.text('ENTRENAMIENTO SUGERIDO PARA HOY'), findsOneWidget);
+    expect(find.text('Entrenos'), findsOneWidget);
+    await tester.tap(find.bySemanticsLabel('Rutinas'));
     await tester.pumpAndSettle();
     expect(find.text('Crea tu primera rutina para empezar a entrenar.'), findsOneWidget);
   });

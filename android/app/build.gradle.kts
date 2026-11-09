@@ -7,7 +7,10 @@ plugins {
 android {
     namespace = "com.example.fittrack"
     // flutter_local_notifications and androidx.core 1.19 require compiling against API 37.
-    compileSdk = 37
+    // The SDK package is named "android-37.0", so it must be declared with its minor level.
+    compileSdk {
+        version = release(37) { minorApiLevel = 0 }
+    }
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

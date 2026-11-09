@@ -609,4 +609,127 @@ class AppLocalizationsEs extends AppLocalizations {
   String routineSetsReps(int sets, int reps) {
     return '$sets × $reps';
   }
+
+  @override
+  String get homeHeadlineLead => 'Vamos a';
+
+  @override
+  String get homeHeadlineAccent => 'entrenar';
+
+  @override
+  String get ringWorkouts => 'Entrenos';
+
+  @override
+  String get ringCalories => 'Calorías';
+
+  @override
+  String get ringStreak => 'Racha';
+
+  @override
+  String daysCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count días',
+      one: '1 día',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String weeksCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count semanas',
+      one: '1 semana',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String ringsSemantics(int done, int goal, int streak) {
+    return 'Esta semana: $done de $goal entrenamientos. Racha de $streak días.';
+  }
+
+  @override
+  String get weekGoalStreak => 'Semanas cumpliendo tu meta';
+
+  @override
+  String get kcalLeft => 'kcal restantes';
+
+  @override
+  String get kcalOver => 'kcal de más';
+
+  @override
+  String get kcalEaten => 'kcal hoy';
+
+  @override
+  String get macroProtein => 'Proteína';
+
+  @override
+  String get macroCarbs => 'Carbohidratos';
+
+  @override
+  String get macroFat => 'Grasas';
+
+  @override
+  String get scanMealTitle => 'Escanear comida con IA';
+
+  @override
+  String get scanMealSubtitle => 'Haz una foto y revisa la estimación';
+
+  @override
+  String exerciseOf(int index, int total) {
+    return 'Ejercicio $index de $total';
+  }
+
+  @override
+  String get setLabel => 'Serie';
+
+  @override
+  String get myRoutines => 'Mis rutinas';
+
+  @override
+  String get workoutDoneTitle => '¡Entrenamiento completado!';
+
+  @override
+  String workoutDoneSubtitle(String name) {
+    return '$name · buen trabajo hoy';
+  }
+
+  @override
+  String get statDuration => 'Duración';
+
+  @override
+  String get statVolume => 'Peso levantado';
+
+  @override
+  String get statSets => 'Series';
+
+  @override
+  String get statExercises => 'Ejercicios';
+
+  @override
+  String get streakTitle => 'Tu racha';
+
+  @override
+  String streakKeepGoing(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '¡$count días seguidos entrenando! No la rompas.',
+      one: '¡Primer día! Vuelve mañana para seguir sumando.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get weekThisWeek => 'Esta semana';
+
+  @override
+  String get viewDetail => 'Ver detalle';
+
+  @override
+  String get backHome => 'Volver al inicio';
 }
