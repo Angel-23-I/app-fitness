@@ -47,9 +47,10 @@ Detalles:
 
 - La clave se guarda con `flutter_secure_storage` (Keystore en Android / Keychain en iOS). **No está en el código ni en git**, y viaja solo en la cabecera `x-goog-api-key` hacia la API de Google.
 - La foto se reduce (máx. 1024 px, JPEG calidad 80) antes de enviarse. Google recibe esa imagen reducida; no se guarda ninguna foto de comida en el dispositivo.
-- Modelo: `gemini-3.8-flash` (constante `geminiModel` en `lib/features/nutrition/data/gemini_food_analyzer.dart`), llamado con `generateContent` y respuesta JSON estructurada. Google marca `generateContent` como API heredada pero soportada; la API Interactions es la recomendada para proyectos nuevos.
+- Modelo: `gemini-3.5-flash-lite` (constante `geminiModel` en `lib/features/nutrition/data/gemini_food_analyzer.dart`), elegido por velocidad: responde a una foto en unos 2 s. Se llama con `generateContent`, razonamiento en nivel `low` (el único que aceptan todos los modelos de la cadena) y respuesta JSON estructurada. Google marca `generateContent` como API heredada pero soportada; la API Interactions es la recomendada para proyectos nuevos.
+- Respaldo: si el modelo está saturado (HTTP 503/500), no responde en 20 s, se corta la conexión o no puede atender la petición (404, o 400 que no sea de la clave), la app prueba `gemini-3.1-flash-lite` y por último `gemini-3.8-flash` (`geminiFallbackModels`). Una clave inválida o sin internet fallan al momento, sin probar los demás.
 - La IA está detrás de la interfaz `FoodAnalyzer` (`lib/features/nutrition/domain/food_models.dart`): para cambiar de proveedor basta con otra implementación y devolverla en `foodAnalyzerProvider`.
-- Errores manejados: sin internet, clave inválida, cuota agotada, respuesta no interpretable y foto sin comida; siempre queda la opción de añadir la comida a mano.
+- Errores manejados: sin internet, IA saturada, IA que tarda demasiado, clave inválida, cuota agotada, respuesta no interpretable y foto sin comida; siempre queda la opción de añadir la comida a mano.
 - Las estimaciones son aproximadas; la app lo avisa en la pantalla de revisión.
 
 ## Estructura

@@ -658,6 +658,18 @@ abstract class AppLocalizations {
   /// **'No hay conexión a internet. Revisa tu red e inténtalo de nuevo.'**
   String get errNoInternet;
 
+  /// No description provided for @errBusy.
+  ///
+  /// In es, this message translates to:
+  /// **'La IA de Google está saturada en este momento. Suele pasar en unos minutos: vuelve a intentarlo o añade la comida a mano.'**
+  String get errBusy;
+
+  /// No description provided for @errTimeout.
+  ///
+  /// In es, this message translates to:
+  /// **'La IA tardó demasiado en responder. Inténtalo de nuevo en un momento o añade la comida a mano.'**
+  String get errTimeout;
+
   /// No description provided for @errInvalidKey.
   ///
   /// In es, this message translates to:

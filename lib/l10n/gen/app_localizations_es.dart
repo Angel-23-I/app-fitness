@@ -310,6 +310,14 @@ class AppLocalizationsEs extends AppLocalizations {
       'No hay conexión a internet. Revisa tu red e inténtalo de nuevo.';
 
   @override
+  String get errBusy =>
+      'La IA de Google está saturada en este momento. Suele pasar en unos minutos: vuelve a intentarlo o añade la comida a mano.';
+
+  @override
+  String get errTimeout =>
+      'La IA tardó demasiado en responder. Inténtalo de nuevo en un momento o añade la comida a mano.';
+
+  @override
   String get errInvalidKey =>
       'La clave de API no es válida o no tiene permisos. Revísala en Ajustes.';
 

@@ -98,6 +98,8 @@
   "mealSave": "Guardar comida",
   "errNoApiKey": "Aún no has configurado tu clave de API de Gemini.",
   "errNoInternet": "No hay conexión a internet. Revisa tu red e inténtalo de nuevo.",
+  "errBusy": "La IA de Google está saturada en este momento. Suele pasar en unos minutos: vuelve a intentarlo o añade la comida a mano.",
+  "errTimeout":"La IA tardó demasiado en responder. Inténtalo de nuevo en un momento o añade la comida a mano.",
   "errInvalidKey": "La clave de API no es válida o no tiene permisos. Revísala en Ajustes.",
   "errQuota": "Se alcanzó el límite de uso de la API. Espera un rato o revisa tu cuota.",
   "errUnparseable": "No se pudo entender la respuesta de la IA. Inténtalo de nuevo o añade la comida a mano.",

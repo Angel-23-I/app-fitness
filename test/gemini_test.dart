@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -76,7 +77,8 @@ void main() {
   group('GeminiFoodAnalyzer', () {
     final jpeg = Uint8List.fromList([1, 2, 3]);
 
-    GeminiFoodAnalyzer analyzer(http.Client c) => GeminiFoodAnalyzer(apiKey: 'KEY', client: c);
+    GeminiFoodAnalyzer analyzer(http.Client c) =>
+        GeminiFoodAnalyzer(apiKey: 'KEY', client: c, retryDelay: Duration.zero);
     String wrap(String text) => jsonEncode({
           'candidates': [
             {'content': {'parts': [{'text': text}]}}
@@ -122,6 +124,101 @@ void main() {
           FoodAnalysisError.noInternet);
       expect(await errorFor(MockClient((_) async => throw http.ClientException('offline'))),
           FoodAnalysisError.noInternet);
+    });
+
+    test('uses Flash-Lite first and keeps 3.8 Flash as the last resort', () {
+      expect(geminiModel, 'gemini-3.5-flash-lite');
+      expect(geminiFallbackModels, ['gemini-3.1-flash-lite', 'gemini-3.8-flash']);
+    });
+
+    test('moves on when a model is retired or rejects the request, but not on a bad key', () async {
+      final used = <String>[];
+      final result = await analyzer(MockClient((r) async {
+        used.add(r.url.path);
+        return switch (used.length) {
+          1 => http.Response('{"error":{"code":404,"status":"NOT_FOUND"}}', 404),
+          2 => http.Response('{"error":{"code":400,"status":"INVALID_ARGUMENT","message":"bad field"}}', 400),
+          _ => http.Response(wrap(_ok), 200),
+        };
+      })).analyze(jpeg);
+      expect(used, hasLength(3));
+      expect(used.last, contains(geminiFallbackModels.last));
+      expect(result.foods, hasLength(2));
+
+      var calls = 0;
+      final badKey = await errorFor(MockClient((_) async {
+        calls++;
+        return http.Response('{"error":{"details":[{"reason":"API_KEY_INVALID"}]}}', 400);
+      }));
+      expect(badKey, FoodAnalysisError.invalidApiKey);
+      expect(calls, 1);
+    });
+
+    test('falls back to the other models when the main one is overloaded', () async {
+      final asked = <String>[];
+      final busy = await errorFor(MockClient((r) async {
+        asked.add(r.url.path);
+        return http.Response('{"error":{"code":503,"status":"UNAVAILABLE"}}', 503);
+      }));
+      expect(busy, FoodAnalysisError.busy);
+      expect(asked, [
+        for (final m in [geminiModel, ...geminiFallbackModels]) '/v1beta/models/$m:generateContent',
+      ]);
+
+      final used = <String>[];
+      final result = await analyzer(MockClient((r) async {
+        used.add(r.url.path);
+        return used.length == 1 ? http.Response('{}', 503) : http.Response(wrap(_ok), 200);
+      })).analyze(jpeg);
+      expect(used.last, contains(geminiFallbackModels.first));
+      expect(result.foods, hasLength(2));
+    });
+
+    test('a dropped connection moves on to the next model; being offline does not', () async {
+      final used = <String>[];
+      final result = await analyzer(MockClient((r) async {
+        used.add(r.url.path);
+        if (used.length == 1) throw const HandshakeException('connection terminated during handshake');
+        return http.Response(wrap(_ok), 200);
+      })).analyze(jpeg);
+      expect(used, hasLength(2));
+      expect(used.last, contains(geminiFallbackModels.first));
+      expect(result.foods, hasLength(2));
+
+      var calls = 0;
+      final offline = await errorFor(MockClient((_) async {
+        calls++;
+        throw const SocketException('Failed host lookup');
+      }));
+      expect(offline, FoodAnalysisError.noInternet);
+      expect(calls, 1);
+    });
+
+    test('a slow answer is reported as timeout, not as missing internet', () async {
+      final analyzer = GeminiFoodAnalyzer(
+        apiKey: 'k',
+        client: MockClient((_) => Completer<http.Response>().future),
+        timeout: const Duration(milliseconds: 10),
+        retryDelay: Duration.zero,
+      );
+      await expectLater(
+        analyzer.analyze(Uint8List(1)),
+        throwsA(isA<FoodAnalysisException>().having((e) => e.error, 'error', FoodAnalysisError.timeout)),
+      );
+    });
+
+    test('asks for low thinking so photos are answered quickly', () async {
+      late Map<String, dynamic> sent;
+      final analyzer = GeminiFoodAnalyzer(
+        apiKey: 'k',
+        client: MockClient((req) async {
+          sent = jsonDecode(req.body) as Map<String, dynamic>;
+          return http.Response('{}', 500);
+        }),
+        retryDelay: Duration.zero,
+      );
+      await expectLater(analyzer.analyze(Uint8List(1)), throwsA(isA<FoodAnalysisException>()));
+      expect(sent['generationConfig']['thinkingConfig'], {'thinkingLevel': 'low'});
     });
 
     test('maps unusable 200 responses', () async {

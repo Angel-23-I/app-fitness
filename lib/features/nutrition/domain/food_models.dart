@@ -54,7 +54,7 @@ class Totals {
       );
 }
 
-enum FoodAnalysisError { noApiKey, noInternet, invalidApiKey, quotaExceeded, unparseable, noFood, server }
+enum FoodAnalysisError { noApiKey, noInternet, timeout, busy, invalidApiKey, quotaExceeded, unparseable, noFood, server }
 
 class FoodAnalysisException implements Exception {
   const FoodAnalysisException(this.error, [this.detail]);

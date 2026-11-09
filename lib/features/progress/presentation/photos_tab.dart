@@ -52,6 +52,7 @@ class _PhotosTabState extends ConsumerState<PhotosTab> {
   void _addMenu() {
     final l10n = AppLocalizations.of(context);
     showModalBottomSheet<void>(
+      useRootNavigator: true,
       context: context,
       showDragHandle: true,
       builder: (ctx) => SafeArea(

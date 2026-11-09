@@ -1,5 +1,4 @@
-import 'dart:typed_data';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -77,8 +76,11 @@ class _MealReviewPageState extends ConsumerState<MealReviewPage> {
         _phase = _Phase.editing;
       });
     } on FoodAnalysisException catch (e) {
+      if (kDebugMode) debugPrint('Food analysis failed: $e');
       _fail(e.error);
-    } catch (_) {
+    } catch (e, st) {
+      // Unexpected: keep the user unblocked, but leave a trace for debugging.
+      if (kDebugMode) debugPrint('Food analysis crashed: ${e.runtimeType}: $e\n$st');
       _fail(FoodAnalysisError.server);
     }
   }
@@ -136,6 +138,8 @@ class _MealReviewPageState extends ConsumerState<MealReviewPage> {
     final msg = switch (e) {
       FoodAnalysisError.noApiKey => l10n.errNoApiKey,
       FoodAnalysisError.noInternet => l10n.errNoInternet,
+      FoodAnalysisError.timeout => l10n.errTimeout,
+      FoodAnalysisError.busy => l10n.errBusy,
       FoodAnalysisError.invalidApiKey => l10n.errInvalidKey,
       FoodAnalysisError.quotaExceeded => l10n.errQuota,
       FoodAnalysisError.unparseable => l10n.errUnparseable,

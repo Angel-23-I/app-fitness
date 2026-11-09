@@ -90,6 +90,7 @@ class MealsPage extends ConsumerWidget {
   void _addMenu(BuildContext context, bool hasKey) {
     final l10n = AppLocalizations.of(context);
     showModalBottomSheet<void>(
+      useRootNavigator: true,
       context: context,
       showDragHandle: true,
       builder: (ctx) => SafeArea(

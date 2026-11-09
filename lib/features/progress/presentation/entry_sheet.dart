@@ -8,6 +8,7 @@ import '../data/body_repository.dart';
 
 Future<void> showEntrySheet(BuildContext context, {BodyEntry? entry}) =>
     showModalBottomSheet<void>(
+      useRootNavigator: true,
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
