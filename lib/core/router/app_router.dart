@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/dashboard/presentation/home_page.dart';
 import '../../features/exercises/presentation/exercises_page.dart';
+import '../../features/onboarding/presentation/onboarding_page.dart';
 import '../../features/routines/presentation/routine_edit_page.dart';
 import '../../features/workout/presentation/history_detail_page.dart';
 import '../../features/workout/presentation/history_page.dart';
@@ -18,18 +19,50 @@ import '../../features/goals/presentation/goals_page.dart';
 import '../../features/goals/presentation/reminders_page.dart';
 import '../../features/nutrition/presentation/meal_review_page.dart';
 import '../../features/nutrition/presentation/meals_page.dart';
+import '../../features/settings/data/settings_repository.dart';
 import '../../features/settings/presentation/api_key_page.dart';
+import '../../features/settings/presentation/backup_page.dart';
 import '../../features/progress/presentation/progress_page.dart';
 import '../../features/routines/presentation/routines_page.dart';
 import '../../features/settings/presentation/settings_page.dart';
 import '../../l10n/gen/app_localizations.dart';
 import '../theme/app_theme.dart';
 
-final routerProvider = Provider<GoRouter>((ref) => createRouter());
+final routerProvider = Provider<GoRouter>((ref) => createRouter(ref));
 
-GoRouter createRouter() => GoRouter(
+class _OnboardingNotifier extends ChangeNotifier {
+  _OnboardingNotifier(Ref ref) {
+    ref.listen(onboardingCompletedProvider, (_, _) => notifyListeners());
+  }
+}
+
+GoRouter createRouter([Ref? ref]) => GoRouter(
       initialLocation: '/',
+      refreshListenable: ref != null ? _OnboardingNotifier(ref) : null,
+      redirect: (context, state) {
+        if (ref == null) return null;
+        final completedAsync = ref.read(onboardingCompletedProvider);
+        if (completedAsync.hasValue) {
+          final completed = completedAsync.value ?? false;
+          final isOnboarding = state.matchedLocation == '/onboarding';
+          if (!completed && !isOnboarding) {
+            return '/onboarding';
+          }
+          if (completed && isOnboarding) {
+            return '/';
+          }
+        }
+        return null;
+      },
       routes: [
+        GoRoute(
+          path: '/onboarding',
+          builder: (_, _) => const OnboardingPage(),
+        ),
+        GoRoute(
+          path: '/settings/backup',
+          builder: (_, _) => const BackupPage(),
+        ),
         GoRoute(
           path: '/exercises',
           builder: (_, s) => ExercisesPage(pickMode: s.uri.queryParameters['pick'] == '1'),

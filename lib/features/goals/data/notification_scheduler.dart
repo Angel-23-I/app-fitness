@@ -20,10 +20,17 @@ abstract class NotificationScheduler {
   Future<void> scheduleWeekly({required int id, required int weekday, required int hour, required int minute});
 
   Future<void> cancel(int id);
+
+  /// Schedules a notification for when the rest timer ends.
+  Future<void> scheduleRestTimer({required int seconds, required String title, required String body});
+
+  /// Cancels any scheduled rest timer notification.
+  Future<void> cancelRestTimer();
 }
 
 class LocalNotificationScheduler implements NotificationScheduler {
   final _plugin = FlutterLocalNotificationsPlugin();
+  static const _restNotificationId = 888888;
 
   @override
   Future<void> init() async {
@@ -83,6 +90,47 @@ class LocalNotificationScheduler implements NotificationScheduler {
 
   @override
   Future<void> cancel(int id) => _plugin.cancel(id: id);
+
+  @override
+  Future<void> scheduleRestTimer(
+      {required int seconds, required String title, required String body}) async {
+    if (seconds <= 0) return;
+    final when = tz.TZDateTime.now(tz.local).add(Duration(seconds: seconds));
+    try {
+      await _plugin.zonedSchedule(
+        id: _restNotificationId,
+        title: title,
+        body: body,
+        scheduledDate: when,
+        notificationDetails: const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'rest_timer_channel',
+            'Temporizador de descanso',
+            channelDescription: 'Aviso cuando finaliza el descanso entre series',
+            importance: Importance.max,
+            priority: Priority.high,
+            playSound: true,
+            enableVibration: true,
+          ),
+          iOS: DarwinNotificationDetails(
+            presentAlert: true,
+            presentSound: true,
+            presentBadge: false,
+          ),
+        ),
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      );
+    } catch (e) {
+      debugPrint('Error programando aviso de descanso: $e');
+    }
+  }
+
+  @override
+  Future<void> cancelRestTimer() async {
+    try {
+      await _plugin.cancel(id: _restNotificationId);
+    } catch (_) {}
+  }
 }
 
 final notificationSchedulerProvider =

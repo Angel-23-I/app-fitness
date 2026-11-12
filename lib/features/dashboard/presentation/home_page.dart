@@ -12,6 +12,7 @@ import '../../goals/data/goals_providers.dart';
 import '../../nutrition/data/meal_repository.dart';
 import '../../progress/data/body_repository.dart';
 import '../../routines/data/routine_repository.dart';
+import '../../settings/data/settings_repository.dart';
 import '../../workout/data/workout_repository.dart';
 import '../domain/suggestion.dart';
 
@@ -21,6 +22,7 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    final userName = ref.watch(userNameProvider).value;
     final now = DateTime.now();
     return Scaffold(
       body: SafeArea(
@@ -38,9 +40,15 @@ class HomePage extends ConsumerWidget {
               Semantics(
                 header: true,
                 child: Text.rich(TextSpan(children: [
-                  TextSpan(text: '${l10n.homeHeadlineLead.toUpperCase()} '),
                   TextSpan(
-                      text: l10n.homeHeadlineAccent.toUpperCase(),
+                    text: userName != null && userName.isNotEmpty
+                        ? 'VAMOS, '
+                        : '${l10n.homeHeadlineLead.toUpperCase()} ',
+                  ),
+                  TextSpan(
+                      text: userName != null && userName.isNotEmpty
+                          ? userName.toUpperCase()
+                          : l10n.homeHeadlineAccent.toUpperCase(),
                       style: const TextStyle(color: AppColors.accent)),
                 ]), style: display(40, italic: true)),
               ),

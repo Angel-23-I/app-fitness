@@ -61,4 +61,30 @@ void main() {
     expect(await doWorkout(50, 5), isEmpty);
     expect((await repo.personalRecords())[bench.id]!.maxWeight, 65);
   });
+
+  test('addExercises adds exercises to active workout and removeExerciseBlock removes them', () async {
+    final id = await repo.startWorkout(routineId);
+    final allEx = await db.select(db.exercises).get();
+    final squat = allEx[1];
+    await repo.addExercises(id, [squat]);
+
+    var session = (await repo.watchSession(id).first)!;
+    expect(session.blocks.length, 2);
+    expect(session.blocks.last.exercise.id, squat.id);
+    expect(session.blocks.last.sets.length, 3);
+
+    await repo.removeExerciseBlock(id, session.blocks.last.sets.first.exerciseOrder);
+    session = (await repo.watchSession(id).first)!;
+    expect(session.blocks.length, 1);
+  });
+
+  test('deleteWorkout removes finished workout and its sets', () async {
+    await doWorkout(60, 8);
+    var history = await repo.watchHistory().first;
+    expect(history.length, 1);
+
+    await repo.deleteWorkout(history.first.workout.id);
+    history = await repo.watchHistory().first;
+    expect(history, isEmpty);
+  });
 }

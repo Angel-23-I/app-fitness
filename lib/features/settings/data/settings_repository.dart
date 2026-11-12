@@ -43,6 +43,12 @@ class SettingKeys {
   static const targetWeight = 'targetWeight';
   static const weeklyWorkouts = 'weeklyWorkouts';
   static const dailyCalories = 'dailyCalories';
+  static const onboardingCompleted = 'onboardingCompleted';
+  static const userName = 'userName';
+  static const userGoal = 'userGoal';
+  static const userGender = 'userGender';
+  static const userHeight = 'userHeight';
+  static const workoutNotePrefix = 'workout_note_';
 }
 
 const defaultRestSeconds = 90;
@@ -51,3 +57,16 @@ final restSecondsProvider = StreamProvider<int>((ref) => ref
     .watch(settingsRepositoryProvider)
     .watch(SettingKeys.restSeconds)
     .map((v) => int.tryParse(v ?? '') ?? defaultRestSeconds));
+
+final onboardingCompletedProvider = StreamProvider<bool>((ref) => ref
+    .watch(settingsRepositoryProvider)
+    .watch(SettingKeys.onboardingCompleted)
+    .map((v) => v == 'true'));
+
+final userNameProvider = StreamProvider<String?>((ref) => ref
+    .watch(settingsRepositoryProvider)
+    .watch(SettingKeys.userName));
+
+final userGoalProvider = StreamProvider<String?>((ref) => ref
+    .watch(settingsRepositoryProvider)
+    .watch(SettingKeys.userGoal));

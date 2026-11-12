@@ -113,8 +113,46 @@ class WorkoutRepository {
 
   Future<void> removeSet(int id) => (_db.delete(_sets)..where((t) => t.id.equals(id))).go();
 
+  /// Removes an entire exercise block from a workout.
+  Future<void> removeExerciseBlock(int workoutId, int exerciseOrder) =>
+      (_db.delete(_sets)
+            ..where((t) => t.workoutId.equals(workoutId) & t.exerciseOrder.equals(exerciseOrder)))
+          .go();
+
+  /// Adds new exercises to an active workout.
+  Future<void> addExercises(int workoutId, List<Exercise> exercises) async {
+    if (exercises.isEmpty) return;
+    final currentSets = await (_db.select(_sets)
+          ..where((t) => t.workoutId.equals(workoutId)))
+        .get();
+    int nextOrder = currentSets.isEmpty
+        ? 0
+        : currentSets.map((s) => s.exerciseOrder).reduce((a, b) => a > b ? a : b) + 1;
+
+    await _db.transaction(() async {
+      for (final ex in exercises) {
+        final last = await lastPerformance(ex.id);
+        const targetSets = 3;
+        for (var s = 0; s < targetSets; s++) {
+          final ref = s < last.length ? last[s] : (last.isEmpty ? null : last.last);
+          await _db.into(_sets).insert(WorkoutSetsCompanion.insert(
+                workoutId: workoutId,
+                exerciseId: ex.id,
+                exerciseOrder: nextOrder,
+                setNumber: s + 1,
+                reps: Value(ref?.reps ?? 10),
+                weightKg: Value(ref?.weightKg ?? 0),
+              ));
+        }
+        nextOrder++;
+      }
+    });
+  }
+
   Future<void> discard(int id) =>
       (_db.delete(_workouts)..where((t) => t.id.equals(id))).go();
+
+  Future<void> deleteWorkout(int id) => discard(id);
 
   /// Closes the workout keeping only completed sets. Returns the exercises whose
   /// personal record was broken (a first-ever performance does not count).

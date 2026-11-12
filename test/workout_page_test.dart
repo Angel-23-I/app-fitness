@@ -7,6 +7,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:fittrack/core/db/app_database.dart';
 import 'package:fittrack/core/db/enums.dart';
 import 'package:fittrack/core/theme/app_theme.dart';
+import 'package:fittrack/features/goals/data/notification_scheduler.dart';
 import 'package:fittrack/features/settings/data/settings_repository.dart';
 import 'package:fittrack/features/workout/data/workout_repository.dart';
 import 'package:fittrack/features/workout/domain/workout_models.dart';
@@ -14,6 +15,7 @@ import 'package:fittrack/features/workout/presentation/workout_page.dart';
 import 'package:fittrack/l10n/gen/app_localizations.dart';
 
 class _MockRepo extends Mock implements WorkoutRepository {}
+class _MockSched extends Mock implements NotificationScheduler {}
 
 void main() {
   testWidgets('completing a set saves it and starts the rest timer', (tester) async {
@@ -41,6 +43,12 @@ void main() {
     final stream = StreamController<WorkoutSession?>();
     addTearDown(stream.close);
     final repo = _MockRepo();
+    final sched = _MockSched();
+    when(() => sched.scheduleRestTimer(
+        seconds: any(named: 'seconds'),
+        title: any(named: 'title'),
+        body: any(named: 'body'))).thenAnswer((_) async {});
+    when(() => sched.cancelRestTimer()).thenAnswer((_) async {});
     when(() => repo.updateSet(any(),
             reps: any(named: 'reps'),
             weightKg: any(named: 'weightKg'),
@@ -50,6 +58,7 @@ void main() {
     await tester.pumpWidget(ProviderScope(
       overrides: [
         workoutRepositoryProvider.overrideWithValue(repo),
+        notificationSchedulerProvider.overrideWithValue(sched),
         workoutSessionProvider(1).overrideWith((ref) => stream.stream),
         lastPerformanceProvider(5).overrideWith((ref) async => <WorkoutSet>[]),
         restSecondsProvider.overrideWith((ref) => Stream.value(90)),

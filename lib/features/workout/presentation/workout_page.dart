@@ -54,6 +54,11 @@ class WorkoutPage extends ConsumerWidget {
           if (session != null) _Elapsed(session.workout.startedAt),
         ]),
         actions: [
+          IconButton(
+            tooltip: 'Notas del entrenamiento',
+            icon: const Icon(Icons.edit_note_rounded),
+            onPressed: () => _showNotesDialog(context, ref, workoutId),
+          ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert_rounded),
             onSelected: (v) async {
@@ -103,6 +108,26 @@ class WorkoutPage extends ConsumerWidget {
                       const SizedBox(height: 14),
                       for (var i = 0; i < s.blocks.length; i++)
                         _BlockCard(workoutId: workoutId, order: i, total: s.blocks.length, block: s.blocks[i]),
+                      const SizedBox(height: 6),
+                      OutlinedButton.icon(
+                        onPressed: () async {
+                          final picked = await context.push<List<Exercise>>('/exercises?pick=1');
+                          if (picked != null && picked.isNotEmpty) {
+                            await ref.read(workoutRepositoryProvider).addExercises(workoutId, picked);
+                          }
+                        },
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(50),
+                          side: const BorderSide(color: AppColors.accent, width: 1.5),
+                          foregroundColor: AppColors.accent,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                        ),
+                        icon: const Icon(Icons.add_rounded),
+                        label: const Text(
+                          'AÑADIR EJERCICIO A LA SESIÓN',
+                          style: TextStyle(fontWeight: FontWeight.w700, letterSpacing: 0.8),
+                        ),
+                      ),
                     ],
                   ),
           ),
@@ -143,6 +168,47 @@ Future<bool> _confirm(BuildContext context, String title, String body) async {
         ),
       ) ??
       false;
+}
+
+Future<void> _showNotesDialog(BuildContext context, WidgetRef ref, int workoutId) async {
+  final settings = ref.read(settingsRepositoryProvider);
+  final noteKey = '${SettingKeys.workoutNotePrefix}$workoutId';
+  final currentNote = await settings.get(noteKey) ?? '';
+  final controller = TextEditingController(text: currentNote);
+
+  if (!context.mounted) return;
+  final saved = await showDialog<bool>(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      title: const Row(children: [
+        Icon(Icons.edit_note_rounded, color: AppColors.accent),
+        SizedBox(width: 8),
+        Text('Notas del entrenamiento'),
+      ]),
+      content: TextField(
+        controller: controller,
+        maxLines: 5,
+        textCapitalization: TextCapitalization.sentences,
+        decoration: const InputDecoration(
+          hintText: 'Sensaciones, molestias, máquina o ajuste usado...',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancelar')),
+        FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Guardar')),
+      ],
+    ),
+  );
+
+  if (saved == true) {
+    await settings.set(noteKey, controller.text.trim().isEmpty ? null : controller.text.trim());
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Notas guardadas')),
+      );
+    }
+  }
 }
 
 /// Time since the workout started, ticking every second.
@@ -251,12 +317,24 @@ class _BlockCard extends ConsumerWidget {
                   ),
                 ),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.end, children: [
-                  Text(l10n.exerciseOf(order + 1, total).toUpperCase(),
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 0.8,
-                          color: done ? AppColors.lime : AppColors.accent)),
+                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                    Text(l10n.exerciseOf(order + 1, total).toUpperCase(),
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 0.8,
+                            color: done ? AppColors.lime : AppColors.accent)),
+                    IconButton(
+                      visualDensity: VisualDensity.compact,
+                      icon: const Icon(Icons.delete_outline_rounded, size: 20, color: AppColors.muted),
+                      tooltip: 'Eliminar ejercicio de la sesión',
+                      onPressed: () async {
+                        if (await _confirm(context, 'Eliminar ejercicio', '¿Quitar ${block.exercise.name} de este entrenamiento?')) {
+                          await ref.read(workoutRepositoryProvider).removeExerciseBlock(workoutId, block.sets.first.exerciseOrder);
+                        }
+                      },
+                    ),
+                  ]),
                   const SizedBox(height: 2),
                   Text(block.exercise.name.toUpperCase(),
                       style: display(30, italic: true), maxLines: 1, overflow: TextOverflow.ellipsis),
@@ -313,12 +391,34 @@ class _SetRow extends ConsumerStatefulWidget {
 class _SetRowState extends ConsumerState<_SetRow> {
   late final _weight = TextEditingController(text: fmtNum(widget.set.weightKg));
   late final _reps = TextEditingController(text: '${widget.set.reps}');
+  final _weightFocus = FocusNode();
+  final _repsFocus = FocusNode();
+  Timer? _debounce;
+
+  @override
+  void didUpdateWidget(_SetRow oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.set.weightKg != widget.set.weightKg && !_weightFocus.hasFocus) {
+      _weight.text = fmtNum(widget.set.weightKg);
+    }
+    if (oldWidget.set.reps != widget.set.reps && !_repsFocus.hasFocus) {
+      _reps.text = '${widget.set.reps}';
+    }
+  }
 
   @override
   void dispose() {
+    _debounce?.cancel();
     _weight.dispose();
     _reps.dispose();
+    _weightFocus.dispose();
+    _repsFocus.dispose();
     super.dispose();
+  }
+
+  void _onFieldChanged() {
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 350), () => _save());
   }
 
   Future<void> _save({bool? completed}) =>
@@ -330,6 +430,7 @@ class _SetRowState extends ConsumerState<_SetRow> {
           );
 
   Future<void> _toggle() async {
+    _debounce?.cancel();
     final done = !widget.set.completed;
     await _save(completed: done);
     if (done) {
@@ -369,22 +470,24 @@ class _SetRowState extends ConsumerState<_SetRow> {
         Expanded(
           child: TextField(
             controller: _weight,
+            focusNode: _weightFocus,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             textAlign: TextAlign.center,
             style: valueStyle,
             decoration: field(l10n.setWeight),
-            onChanged: (_) => _save(),
+            onChanged: (_) => _onFieldChanged(),
           ),
         ),
         const SizedBox(width: 8),
         Expanded(
           child: TextField(
             controller: _reps,
+            focusNode: _repsFocus,
             keyboardType: TextInputType.number,
             textAlign: TextAlign.center,
             style: valueStyle,
             decoration: field(l10n.reps),
-            onChanged: (_) => _save(),
+            onChanged: (_) => _onFieldChanged(),
           ),
         ),
         const SizedBox(width: 8),

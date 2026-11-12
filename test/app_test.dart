@@ -10,14 +10,16 @@ import 'package:fittrack/features/nutrition/data/meal_repository.dart';
 import 'package:fittrack/features/progress/data/body_repository.dart';
 import 'package:fittrack/features/routines/data/routine_repository.dart';
 import 'package:fittrack/features/routines/domain/routine_models.dart';
+import 'package:fittrack/features/settings/data/settings_repository.dart';
 import 'package:fittrack/features/workout/data/workout_repository.dart';
 import 'package:fittrack/features/workout/domain/workout_models.dart';
 
 void main() {
-  testWidgets('bottom navigation switches between tabs', (tester) async {
+  testWidgets('bottom navigation switches between tabs when onboarded', (tester) async {
     // Streams are faked: drift's real async work does not run inside testWidgets' fake clock.
     await tester.pumpWidget(ProviderScope(
       overrides: [
+        onboardingCompletedProvider.overrideWith((ref) => Stream.value(true)),
         routinesProvider.overrideWith((ref) => Stream.value(<RoutineSummary>[])),
         historyProvider.overrideWith((ref) => Stream.value(<WorkoutSummary>[])),
         activeWorkoutProvider.overrideWith((ref) => Stream.value(null)),
@@ -34,6 +36,25 @@ void main() {
     await tester.tap(find.bySemanticsLabel('Rutinas'));
     await tester.pumpAndSettle();
     expect(find.text('Crea tu primera rutina para empezar a entrenar.'), findsOneWidget);
+  });
+
+  testWidgets('redirects to onboarding when not completed', (tester) async {
+    await tester.pumpWidget(ProviderScope(
+      overrides: [
+        onboardingCompletedProvider.overrideWith((ref) => Stream.value(false)),
+        routinesProvider.overrideWith((ref) => Stream.value(<RoutineSummary>[])),
+        historyProvider.overrideWith((ref) => Stream.value(<WorkoutSummary>[])),
+        activeWorkoutProvider.overrideWith((ref) => Stream.value(null)),
+        bodyEntriesProvider.overrideWith((ref) => Stream.value(<BodyEntry>[])),
+        goalsProvider.overrideWith((ref) => Stream.value(const Goals())),
+        todayMealsProvider.overrideWith((ref) => Stream.value(<MealWithItems>[])),
+      ],
+      child: const FitTrackApp(),
+    ));
+    await tester.pumpAndSettle();
+
+    expect(find.text('CREA TU PERFIL'), findsOneWidget);
+    expect(find.text('¿CÓMO TE LLAMAS?'), findsOneWidget);
   });
 
   test('database inserts and cascades deletes', () async {

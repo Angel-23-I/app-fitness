@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/fit_widgets.dart';
 import '../../../l10n/gen/app_localizations.dart';
+import '../../goals/data/notification_scheduler.dart';
 
 /// End time of the running rest countdown, or null when idle.
 class RestTimer extends Notifier<DateTime?> {
@@ -19,6 +20,11 @@ class RestTimer extends Notifier<DateTime?> {
   void start(int seconds) {
     total = seconds;
     state = DateTime.now().add(Duration(seconds: seconds));
+    ref.read(notificationSchedulerProvider).scheduleRestTimer(
+          seconds: seconds,
+          title: '¡Descanso terminado! 💪',
+          body: 'Hora de comenzar la siguiente serie.',
+        );
   }
 
   void add(int seconds) {
@@ -31,9 +37,18 @@ class RestTimer extends Notifier<DateTime?> {
     }
     if (seconds > 0) total += seconds;
     state = next;
+    final remaining = next.difference(DateTime.now()).inSeconds;
+    ref.read(notificationSchedulerProvider).scheduleRestTimer(
+          seconds: remaining,
+          title: '¡Descanso terminado! 💪',
+          body: 'Hora de comenzar la siguiente serie.',
+        );
   }
 
-  void stop() => state = null;
+  void stop() {
+    state = null;
+    ref.read(notificationSchedulerProvider).cancelRestTimer();
+  }
 }
 
 final restTimerProvider = NotifierProvider<RestTimer, DateTime?>(RestTimer.new);
